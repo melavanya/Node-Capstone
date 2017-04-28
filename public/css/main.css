@@ -1,0 +1,11 @@
+.btn-large{
+  background-color:grey;
+  color:black;
+}
+.invisible{
+  display: none;
+}
+img{
+  width:200px;
+  height:200px;
+}
