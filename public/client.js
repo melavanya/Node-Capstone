@@ -34,15 +34,21 @@ function search() {
 }
 
 function displaySearchData(dataJson){
-  var genreElement = dataJson.Genre.map(function(genre) {
-    return '<li>'+ genre.name +'</li>';
+  var genreElement = " ";
+  var castElement = " ";
+  dataJson.Genre.forEach(function(genre) {
+    genreElement+= '<li>'+ genre.name +'</li>';
   });
+  dataJson.Cast.forEach(function(cast){
+    castElement+='<li>'+ cast.name + ' as "' + cast.character + '"</li>'
+  });
+
  var html='<p><img src="https://image.tmdb.org/t/p/w500' + dataJson.Poster +
  '" > </p><p>Title: '+ dataJson.Title + '</p><p>Release Date: '
   + dataJson.Release_date + '</p><p>Rating:'+ dataJson.Rating +
-  '</p><p>Duration:'+ dataJson.Duration+' Minutes</p><p><ul>' +genreElement+
-  '</ul></p><p>Overview: '
-   + dataJson.Overview +'</p>';
+  '</p><p>Duration:'+ dataJson.Duration+' Minutes</p><p>Genre: <ul>' +genreElement+
+  '</ul></p><p>Overview: '+ dataJson.Overview +'</p><p>Cast Details: <ul>'+
+  castElement +'</ul></p>';
  $('.js-search-results').removeClass('invisible');
  $('.js-search-results').html(html);
 
