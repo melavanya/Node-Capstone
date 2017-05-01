@@ -18,7 +18,6 @@ function getMovieId (searchTerm){
       if(response.statusCode=== 200){
         if(data.results.length !== 0){
           movieId=data.results[0].id;
-          console.log(movieId);
           resolve();
         } else {
           reject();
@@ -43,7 +42,6 @@ return new Promise(function(resolve , reject){
       result.Genre = data.genres;
       result.Rating = data.vote_average;
       result.Duration = data.runtime;
-      console.log(result.Genre);
       resolve();
     }else {
       reject();
@@ -71,9 +69,6 @@ return new Promise(function(resolve , reject){
 });
 }
 
-
-
-
 app.use(express.static('public'));
 
 app.get("/movies",(req,res) => {
@@ -91,7 +86,32 @@ app.get("/movies",(req,res) => {
   });
 });
 
+let server;
+function runServer() {
+  const port = process.env.PORT || 8080;
+  return new Promise((resolve, reject) => {
+    server = app.listen(port, () => {
+      console.log(`Your app is listening on port ${port}`);
+      resolve(server);
+    }).on('error', err => {
+      reject(err)
+    });
+  });
+}
+function closeServer() {
+  return new Promise((resolve, reject) => {
+    console.log('Closing server');
+    server.close(err => {
+      if (err) {
+        reject(err);
+        return;
+      }
+      resolve();
+    });
+  });
+}
+if (require.main === module) {
+  runServer().catch(err => console.error(err));
+};
 
-
-app.listen(process.env.PORT || 8080, () => console.log(
-  `Your app is listening on port ${process.env.PORT || 8080}`));
+module.exports = {app, runServer, closeServer};
