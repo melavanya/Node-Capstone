@@ -49,8 +49,8 @@ function displaySearchData(dataJson){
   '</p><p>Duration:'+ dataJson.Duration+' Minutes</p><p>Genre: <ul>' +genreElement+
   '</ul></p><p>Overview: '+ dataJson.Overview +'</p><p>Cast Details: <ul>'+
   castElement +'</ul></p>';
- $('.js-search-results').removeClass('invisible');
- $('.js-search-results').html(html);
+  $('.js-search-results').html(html);
+ $('.ui.modal.results').modal('show');
 
 
 }

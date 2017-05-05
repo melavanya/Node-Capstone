@@ -1,15 +1,10 @@
-.btn-large{
-  background-color:grey;
-  color:black;
+body{
+  background-image: url("../background.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
 }
-.invisible{
-  display: none;
-}
-img{
-  width:200px;
-  height:200px;
-}
-li{
-  font-size: 21px;
-    font-weight: 200;
+.ui.raised.segment.one{
+  margin-top: 100px;
+  background-image: url("../background.jpg");
+  border-style: none;
 }
