@@ -26,6 +26,7 @@ $.ajax({
 }
 
 function search() {
+
   $(".js-search-form").submit(function(e) {
     e.preventDefault();
     var searchTerm = $(this).find(".js-search-input").val();
@@ -37,20 +38,32 @@ function displaySearchData(dataJson){
   var genreElement = " ";
   var castElement = " ";
   dataJson.Genre.forEach(function(genre) {
-    genreElement+= '<li>'+ genre.name +'</li>';
+    genreElement+= '<div class="ui tag red label">'+ genre.name +'</div>';
   });
   dataJson.Cast.forEach(function(cast){
-    castElement+='<li>'+ cast.name + ' as "' + cast.character + '"</li>'
+    castElement+='<li>'+ cast.name + ' as "' + cast.character + '"</li>';
   });
 
- var html='<p><img src="https://image.tmdb.org/t/p/w500' + dataJson.Poster +
- '" > </p><p>Title: '+ dataJson.Title + '</p><p>Release Date: '
-  + dataJson.Release_date + '</p><p>Rating:'+ dataJson.Rating +
-  '</p><p>Duration:'+ dataJson.Duration+' Minutes</p><p>Genre: <ul>' +genreElement+
-  '</ul></p><p>Overview: '+ dataJson.Overview +'</p><p>Cast Details: <ul>'+
-  castElement +'</ul></p>';
-  $('.js-search-results').html(html);
- $('.ui.modal.results').modal('show');
 
-
+  var html = '<i class="close icon"></i><div class="header">'+ dataJson.Title +'</div><div class="image content">'+
+      '<div class="ui medium image"><img src="https://image.tmdb.org/t/p/w500'+ dataJson.Poster +'">'+
+     '</div><div class="description"><div class="ui header">Overview : </div>'+
+        '<p>' + dataJson.Overview +'</p>'+'<p><input type="text" class="dial"></p>'+
+        '<p>Genre:'+ genreElement +'</p></div></div>';
+ // var html='<div class="image content"><div class="ui medium image"><img class="ui small circular image" src="https://image.tmdb.org/t/p/w500' + dataJson.Poster +
+ // '" ></div></div><p>Title: '+ dataJson.Title + '</p><p>Release Date: '
+ //  + dataJson.Release_date + '</p><p>Rating:'+ dataJson.Rating +
+ //  '</p><p>Duration:'+ dataJson.Duration+' Minutes</p><p>Genre: <ul>' +genreElement+
+ //  '</ul></p><p>Overview: '+ dataJson.Overview +'</p><p>Cast Details: <ul>'+
+ //  castElement +'</ul></p>';
+  $('.ui.modal.results').html(html);
+ $(".dial").val(dataJson.Rating).knob({
+   "readOnly":true,
+   "fgColor":"green",
+   "width":"75",
+   "thickness":".3",
+   "min":0,
+   "max":10
+ });
+$('.ui.modal.results').modal('show');
 }
