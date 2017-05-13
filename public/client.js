@@ -45,7 +45,7 @@ function displaySearchData(dataJson){
   });
 
 
-  var html = '<i class="close icon"></i><div class="header">'+ dataJson.Title +'</div><div class="image content">'+
+  var html = '<div class="header">'+ dataJson.Title +'</div><div class="image content">'+
       '<div class="ui medium image"><img src="https://image.tmdb.org/t/p/w500'+ dataJson.Poster +'">'+
      '</div><div class="description"><div class="ui header">Overview : </div>'+
         '<p>' + dataJson.Overview +'</p>'+'<p><input type="text" class="dial"></p>'+
@@ -56,7 +56,7 @@ function displaySearchData(dataJson){
  //  '</p><p>Duration:'+ dataJson.Duration+' Minutes</p><p>Genre: <ul>' +genreElement+
  //  '</ul></p><p>Overview: '+ dataJson.Overview +'</p><p>Cast Details: <ul>'+
  //  castElement +'</ul></p>';
-  $('.ui.modal.results').html(html);
+  $('.js-search-results').html(html);
  $(".dial").val(dataJson.Rating).knob({
    "readOnly":true,
    "fgColor":"green",
@@ -65,5 +65,7 @@ function displaySearchData(dataJson){
    "min":0,
    "max":10
  });
-$('.ui.modal.results').modal('show');
+//  $('.js-search-results')
+//   .transition('slide down')
+// ;
 }
