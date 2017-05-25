@@ -1,49 +1,91 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <title>Node Capstone</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.10/semantic.css">
-    <link rel="stylesheet" href="./css/main.css">
-  </head>
+<head>
+  <meta charset="utf-8">
+  <title>Node Capstone</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.10/semantic.css">
+  <link href="https://fonts.googleapis.com/css?family=Slabo+27px" rel="stylesheet">
+  <link rel="stylesheet" href="./styles/main.css">
+</head>
+
+<body>
+
+  <div class="ui raised very padded text container segment ">
+
+    <div class="ui top attached tabular menu">
+      <a class="item active" data-tab="home">Home<i class="home icon"></i></a>
+      <a class="item" data-tab="log-in">Log-in<i class="user icon"></i></a>
+      <a class="item" data-tab="sign-up">Sign-up<i class="add user icon"></i></a>
+    </div>
 
 
-  <body>
+    <div class="ui bottom attached tab segment active" data-tab="home">
+      <h2>Movie search</h2>
+    </div>
 
-    <div class="ui margin-top very padded text container segment ">
-      <h2 class="ui header">Movie Search</h2>
-      <p>Search for a movie with titles.We will find the movies for you to watch!</p>
-    <form class="ui form js-search-form">
-      <div class="ui inverted  left corner labeled input">
-        <input type="text" class =" js-search-input" placeholder="Movie Title">
-        <div class="ui left corner label">
-          <i class="asterisk icon"></i>
+    <div class="ui bottom attached tab segment" data-tab="log-in">
+      <div class="ui error message response"></div>
+
+      <div class="ui middle aligned center aligned grid">
+        <div class="column">
+          <h2 class="ui teal header">
+            <div class="content">
+              Log-in to your account
+            </div>
+          </h2>
+          <form class="ui large form js-login-form" >
+            <div class="ui stacked segment">
+              <div class="field">
+                <div class="ui left icon input">
+                  <i class="user icon"></i>
+                  <input type="text" class="js-login-username" name="username" placeholder="UserName" class="username">
+                </div>
+              </div>
+              <div class="field">
+                <div class="ui left icon input">
+                  <i class="lock icon"></i>
+                  <input type="password" class="js-login-password" name="password" placeholder="Password">
+                </div>
+              </div>
+              <button type="submit" class="ui fluid large teal submit button log-in" value="submit">Login</button>
+            </div>
+
+            
+          </form>
+
         </div>
-
-
       </div>
+    </div>
 
-<button class="ui basic button js-submit-search" type="submit">Submit</button>
-</form>
+    <div class="ui bottom attached tab segment" data-tab="sign-up">
+              <div class="ui error message response"></div>
+
+      <form class="ui form js-signup-form">
+        <div class="field">
+          <label>First Name</label>
+          <input type="text" class="js-signup-firstname" name="firstname" placeholder="First Name">
+        </div>
+        <div class="field">
+          <label>Last Name</label>
+          <input type="text" class="js-signup-lastname" name="lastname" placeholder="Last Name">
+        </div>
+        <div class="field">
+          <label>UserName:</label>
+          <input type="text" class="js-signup-username" name="username" placeholder="UserName">
+        </div>
+        <div class="field">
+          <label>Password</label>
+          <input type="password" class="js-signup-password" name="password" placeholder="Password">
+        </div>
+        <button class="ui button basic" type="submit">Sign Up</button>
+      </form>
+    </div>
   </div>
+  <script type="text/javascript" src ="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js">
+  </script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.10/semantic.js">
+  </script>
 
-
-  <div class="ui margin-top very padded text container segment ">
-
-  <div class="ui js-search-results">
-
-  </div>
-  </div>
-
-
-
-
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js">
-    </script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.10/semantic.js">
-    </script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jQuery-Knob/1.2.13/jquery.knob.min.js" charset="utf-8"></script>
-    <script type="text/javascript" src="client.js">
-    </script>
-  </body>
+  <script src="./js/client.js" charset="utf-8"></script>
+</body>
 </html>

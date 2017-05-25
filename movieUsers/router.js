@@ -2,7 +2,7 @@ var LocalStrategy = require('passport-local').Strategy;
 const express = require('express');
 const jsonParser = require('body-parser').json();
 const passport = require('passport');
-
+    
 const {User} = require('./models');
 
 const router = express.Router();
@@ -11,14 +11,13 @@ const path    = require("path");
 
 const localStrategy = new LocalStrategy((username, password, callback) => {
   let user;
-  console.log(' Username:' , username);
   User
     .findOne({username: username})
     .exec()
     .then(_user => {
       user = _user;
       if (!user) {
-        return callback(null, false, {message: 'Incorrect username'});
+        return res.status(422).json({message: 'Incorrect username'});
       }
       return user.validatePassword(password);
     })
@@ -50,40 +49,40 @@ passport.use(localStrategy);
 router.use(passport.initialize());
 
 router.post('/', (req, res) => {
-  console.log(req.body);
+  
   console.log('creating user');
   if (!req.body) {
     return res.status(400).json({message: 'No request body'});
   }
 
   if (!('username' in req.body)) {
-    return res.status(422).json({message: 'Missing field: username'});
+    return res.status(422).json({message: 'Please Enter Username.'});
   }
 
   let {username, password, firstName, lastName} = req.body;
 
   if (typeof username !== 'string') {
-    return res.status(422).json({message: 'Incorrect field type: username'});
+    return res.status(422).json({message: 'Please Enter a valid Username.'});
   }
 
   username = username.trim();
 
   if (username === '') {
-    return res.status(422).json({message: 'Incorrect field length: username'});
+    return res.status(422).json({message: 'Please Enter a valid Username.'});
   }
 
   if (!(password)) {
-    return res.status(422).json({message: 'Missing field: password'});
+    return res.status(422).json({message: 'Please Enter a Password.'});
   }
 
   if (typeof password !== 'string') {
-    return res.status(422).json({message: 'Incorrect field type: password'});
+    return res.status(422).json({message: 'Please Enter a valid Password.'});
   }
 
   password = password.trim();
 
   if (password === '') {
-    return res.status(422).json({message: 'Incorrect field length: password'});
+    return res.status(422).json({message: 'Please Enter a Password.'});
   }
 
   return User
@@ -92,7 +91,7 @@ router.post('/', (req, res) => {
     .exec()
     .then(count => {
       if (count > 0) {
-        return res.status(422).json({message: 'username already taken'});
+        return res.status(422).json({message: 'Username already taken.'});
       }
       return User.hashPassword(password)
     })
@@ -107,7 +106,11 @@ router.post('/', (req, res) => {
     })
     .then(user => {
       console.log(user);
-      return res.status(201).json(user.apiRepr());
+      return res.send({
+        redirectTo: '/users/dashboard',
+        msg: 'authed user',
+        granted: true
+      });
     })
     .catch(err => {
       res.status(500).json({message: 'Internal server error'})
@@ -123,22 +126,25 @@ router.get('/', (req, res) => {
 });
 
 
-router.post('/me', passport.authenticate('local') , function(req, res, next) {
-  console.log('Login Data in authenticate: ' , req.body);
-  res.redirect('/users/dashboard');
-    next();
-    //console.log('checking login ' , req.logIn);
+router.post('/me', passport.authenticate('local'),
+
+
+  function (req, res) {
+    console.log('Login Data in authenticate: ', req.body);
+    console.log(' current user ', req.user.username);
+
+    res.send({
+      redirectTo: '/users/dashboard',
+      msg: 'authed user',
+      granted: true,
+      user: req.user.username
+    });
   });
 
-//   router.get('/me', passport.authenticate('local', {
-//   successRedirect: __dirname + '/profile.html',
-//   failureRedirect: '/',
-//   failureFlash: true,
-// }));
-
-router.get('/dashboard', function (req, res, next) {
-  console.log('recieving url to got to dashboard');
-  res.sendFile(__dirname + '/profile.html' );
+router.get('/dashboard/:user', function (req, res, next) {
+   console.log('the param', req.params.user);
+  console.log('recieving url to go to dashboard');
+  res.sendFile(path.resolve('public/profile.html'));
 });
 
 

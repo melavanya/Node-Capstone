@@ -1,6 +1,7 @@
 
 
 $(function() {
+  $('.response').hide();
   $('.menu .item').tab();
   $('.js-signup-form').submit(function (e) {
   
@@ -17,12 +18,17 @@ $(function() {
   data: signUpData
 })
 .done(function(data) {
-  console.log("success");
-  console.log(data.status);
+  console.log(data);
+  if(data.granted === true) {
+    window.location = data.redirectTo;
+  }
 })
 .fail(function(error) {
-  console.log(error.status);
-  console.log("error");
+  console.log(error);
+  console.log(error.responseText);
+  $('.response').show();
+  $('.response').html('<p>' + error.responseJSON.message + '</p>');
+  $('.js-signup-password').val('');
 })
 .always(function() {
   console.log("complete");
@@ -36,8 +42,8 @@ $('.js-login-form').submit(function (e) {
     var loginData = {
       username: $('.js-login-username').val(),
       password: $('.js-login-password').val(),
-      // firstName: $('.js-signup-firstname').val(),
-      // lastName: $('.js-signup-lastname').val(),
+      firstName: $('.js-signup-firstname').val(),
+      lastName: $('.js-signup-lastname').val(),
     };
     e.preventDefault();
       $.ajax({
@@ -47,11 +53,19 @@ $('.js-login-form').submit(function (e) {
 })
 .done(function(data) {
   console.log("success");
-  console.log(data.status);
+  console.log(data);
+  if(data.granted === true) {
+    window.location = data.redirectTo;
+  }
 })
 .fail(function(error) {
-  console.log(error.status);
-  console.log("error");
+  console.log(error);
+  console.log(error.responseText);
+  // if unauth -> display in a div that either username or password is incorrect.
+  if(error.responseText === "Unauthorized") {
+    $('.response').show();
+    $('.response').html('<p>' + "Username or Password incorrect !!" + '</p>');
+  }
 })
 .always(function() {
   console.log("complete");
