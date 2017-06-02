@@ -1,14 +1,11 @@
-var LocalStrategy = require('passport-local').Strategy;
+const LocalStrategy = require('passport-local').Strategy;
 const express = require('express');
 const jsonParser = require('body-parser').json();
 const passport = require('passport');
-    
-const {User} = require('./models');
-
+const flash = require('connect-flash');  
+const {User} = require('./User-model');
 const router = express.Router();
-const path    = require("path");
-
-
+const path = require('path');
 const localStrategy = new LocalStrategy((username, password, callback) => {
   let user;
   User
@@ -17,13 +14,13 @@ const localStrategy = new LocalStrategy((username, password, callback) => {
     .then(_user => {
       user = _user;
       if (!user) {
-        return res.status(422).json({message: 'Incorrect username'});
+        return callback(null, false);
       }
       return user.validatePassword(password);
     })
     .then(isValid => {
       if (!isValid) {
-        return callback(null, false, {message: 'Incorrect password'});
+        return callback(null, false);
       }
       else {
         return callback(null, user)
@@ -48,19 +45,15 @@ passport.deserializeUser(function(id, done) {
 passport.use(localStrategy);
 router.use(passport.initialize());
 
-router.post('/', (req, res) => {
-  
-  console.log('creating user');
-  if (!req.body) {
-    return res.status(400).json({message: 'No request body'});
-  }
-
-  if (!('username' in req.body)) {
-    return res.status(422).json({message: 'Please Enter Username.'});
-  }
+router.post('/', (req, res) => {  
 
   let {username, password, firstName, lastName} = req.body;
-
+  if ((firstName === '')) {
+    return res.status(422).json({message: 'Please Enter First Name.'});
+  }
+ if ((lastName === '')) {
+    return res.status(422).json({message: 'Please Enter Last Name.'});
+  }
   if (typeof username !== 'string') {
     return res.status(422).json({message: 'Please Enter a valid Username.'});
   }
@@ -106,11 +99,7 @@ router.post('/', (req, res) => {
     })
     .then(user => {
       console.log(user);
-      return res.send({
-        redirectTo: '/users/dashboard',
-        msg: 'authed user',
-        granted: true
-      });
+      return res.status(200).json({message: `Welcome ${user.username}! Please log-in to search for Movies!`});
     })
     .catch(err => {
       res.status(500).json({message: 'Internal server error'})
@@ -127,25 +116,48 @@ router.get('/', (req, res) => {
 
 
 router.post('/me', passport.authenticate('local'),
-
-
-  function (req, res) {
+  function (req, res , next) {
     console.log('Login Data in authenticate: ', req.body);
-    console.log(' current user ', req.user.username);
+    console.log(' current user ', req.user._id);
 
     res.send({
-      redirectTo: '/users/dashboard',
-      msg: 'authed user',
+      redirectTo: '/users/dashboard/' + req.user.username,
+      msg: 'loginMessage',
       granted: true,
       user: req.user.username
     });
   });
 
-router.get('/dashboard/:user', function (req, res, next) {
-   console.log('the param', req.params.user);
+router.get('/dashboard/:user', isLoggedIn, function (req, res, next) {
+  
+   console.log('the params of user is --> ', req.params.user);
   console.log('recieving url to go to dashboard');
-  res.sendFile(path.resolve('public/profile.html'));
+
+  User.findOne({username: req.params.user}, function (err, user) {
+    console.log('the current user --> ' , user);
+    
+    res.sendFile(path.resolve('public/profile.html'),user);
+  });
+  
+  
 });
+
+function isLoggedIn (req, res, next) {
+  console.log('THE PARAMS', req.params);
+    // if user is authenticated in the session, carry on 
+    
+    if (req.user === req.params.user) {
+        return next();
+    }
+
+    // if not authenticated, redirect to /
+    console.log('not authed');
+    res.redirect('/');
+}
+
 
 
 module.exports = {router};
+
+
+
