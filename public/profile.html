@@ -2,6 +2,7 @@
 <html>
   <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Node Capstone</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.10/semantic.css">
     <link href='https://fonts.googleapis.com/css?family=ABeeZee' rel='stylesheet'>
@@ -13,17 +14,13 @@
 
 
 <div class="ui left visible vertical inverted sidebar labeled icon menu">
-  <a class="item">
+  <a href="/users/dashboard" class="item">
     <i class="home icon"></i>
     Home
   </a>
-  <a class="item">
+  <a href="/movies/favorites" class="item">
     <i class="heart icon"></i>
     Favorites<div class="floating ui red label">22</div>
-  </a>
-  <a class="item">
-    <i class="setting icon"></i>
-    Settings
   </a>
   <a class="item">
     <i class="power icon"></i>
@@ -35,7 +32,7 @@
 
     <div class="ui very padded text container segment ">
       <h2 class="ui header">Movie Search</h2>
-      <p>Search for a movie with titles.We will find the movies for you to watch!</p>
+      <p>Search for a movie with titles. We will find the movies for you to watch!</p>
     <form class="ui form js-search-form">
       <div class="ui inverted  left corner labeled input">
         <input type="text" class =" js-search-input" placeholder="Movie Title">

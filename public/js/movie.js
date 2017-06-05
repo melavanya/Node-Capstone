@@ -7,6 +7,11 @@ $(function() {
     getMovie(searchTerm);
    });
 
+   $.getJSON('/movies/userFavorites', function (data) {
+     console.log(data);
+     $('.label').html(data.length);
+   });
+
 });
 
 function getMovie(searchTerm){

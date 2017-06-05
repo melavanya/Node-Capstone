@@ -29,7 +29,7 @@ h1, h2, h3, h4, h5 {
   overflow: scroll;
 }
 .ui.floating.label {
-left:70px;
+left:80px;
 }
 .hidden{
   display: none;

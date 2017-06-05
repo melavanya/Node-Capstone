@@ -57,6 +57,12 @@ movieApi.post('/new', function (req, res, next) {
      res.send(user.movies);
      }
    });
+
+   movieApi.get('/userFavorites', function (req, res, next) {
+     User.findById(req.user._id, function (err, user) {
+       res.send(user.movies);
+     })
+   });
    
 
    
