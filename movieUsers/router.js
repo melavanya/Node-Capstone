@@ -121,39 +121,20 @@ router.post('/me', passport.authenticate('local'),
     console.log(' current user ', req.user._id);
 
     res.send({
-      redirectTo: '/users/dashboard/' + req.user.username,
+      redirectTo: '/users/dashboard',
       msg: 'loginMessage',
       granted: true,
       user: req.user.username
     });
   });
 
-router.get('/dashboard/:user', isLoggedIn, function (req, res, next) {
-  
-   console.log('the params of user is --> ', req.params.user);
+router.get('/dashboard', function (req, res, next) {
+   console.log('the param', req.user._id);
   console.log('recieving url to go to dashboard');
-
-  User.findOne({username: req.params.user}, function (err, user) {
-    console.log('the current user --> ' , user);
-    
-    res.sendFile(path.resolve('public/profile.html'),user);
-  });
-  
-  
+  res.sendFile(path.resolve('public/profile.html'));
 });
 
-function isLoggedIn (req, res, next) {
-  console.log('THE PARAMS', req.params);
-    // if user is authenticated in the session, carry on 
-    
-    if (req.user === req.params.user) {
-        return next();
-    }
 
-    // if not authenticated, redirect to /
-    console.log('not authed');
-    res.redirect('/');
-}
 
 
 

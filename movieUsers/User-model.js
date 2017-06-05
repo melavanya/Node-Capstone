@@ -16,7 +16,10 @@ const UserSchema = mongoose.Schema({
   },
   firstName: {type: String, default: ""},
   lastName: {type: String, default: ""},
-  movieIds: Array
+  movies: [{
+    dateAdded: String,
+    movieId : Number
+  }]
 });
 
 UserSchema.methods.apiRepr = function() {

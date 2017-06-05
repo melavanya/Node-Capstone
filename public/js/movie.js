@@ -1,11 +1,12 @@
 $(function() {
-    $('.js-search-results').hide();
+ $('.response').hide(); 
+ $('.js-search-results').hide();
     $(".js-search-form").submit(function(e) {
     e.preventDefault();
     var searchTerm = $(this).find(".js-search-input").val();
-   
     getMovie(searchTerm);
-  });
+   });
+
 });
 
 function getMovie(searchTerm){
@@ -17,6 +18,7 @@ $.ajax({
   }
 })
 .done(function(data) {
+  console.log(data);
 displaySearchData(data);
 })
 .fail(function(error) {
@@ -25,95 +27,83 @@ displaySearchData(data);
 }
  
 function displaySearchData(dataJson){
-    var html = '';
-     html += '<div class="ui list">';
-    dataJson.forEach(function(movie){
-       html+='<div class="item"><a class="header">'+ movie.Title+'</a>'+movie.Overview+'</div>'+
-      ' <form class="movieForm" action="/movies/new" method="POST"><input class="hidden moviebtn" type="text" value="'+movie.MovieId+'" name="MovieId">'+
-       '<input type="submit" class="button tiny ui" value="Add"></form>';
+
+  $('.js-search-results').html('');
+
+  var html = '';
+  html += '<div class="ui styled fluid accordion">';
+
+  dataJson.forEach(function(movie){
+
+    var genreElement = " ";
+    var castElement = " ";
+
+    movie.Genre.forEach(function(genre) {
+    genreElement+= '<div class="ui tag red label">'+ genre.name +'</div>';
     });
+    
+    if(movie.CastInfo !== undefined){
+    movie.CastInfo.forEach(function(cast){
+    castElement+='<div class="item"><div class="header">'+cast.castName+'</div> As '+cast.characterName+'</div>';
+    });
+  }
+  
+    html+='<div><div class="title"><i class="dropdown icon"></i>'+ movie.Title +
+'</div><div class=" content"><p>'+movie.Overview+ '</p><button class="ui green button modal-show" value="'+movie.MovieId+'">Details</button></div>'+
+'<div class="ui modal '+ movie.MovieId +'"><i class="close icon"></i><div class="header">'+ movie.Title +
+'</div><div class="image content"><div class="ui medium image"><img src="https://image.tmdb.org/t/p/w500'+ movie.Poster +'">'+
+'</div><div class="description"><div class="ui header">'+ movie.Overview +
+'</div><div class="ui horizontal list"><div class="item"><div class="header">Released On:'+movie.Release_Date+'</div></div>'+
+'<div class="item"><div class="header">Run-time:'+ movie.Duration + ' Minutes</div>'+
+'</div></div><div class="ui header">Rating:'+movie.Rating+'</div><p>Genre:</p>'+genreElement+
+'<p></p><p>Cast:</p><div class="ui list">'+castElement+'</div></div></div>'+
+'<div class="actions"><div class="ui positive labeled icon button">Add to Favorites!<i class="checkmark icon"></i>'+
+'</div></div></div></div>';
+
+});
 html+='</div>';
 
-// <input type="text" class="moviebtn" value="movie.Title" name="Title">
 
- $('.movieForm').submit(function (evnt) {
-   evnt.preventDefault();
- });
-//   console.log($('.moviebtn').val());
-//   evnt.preventDefault();
-//   $.ajax({
-//   url: '/movies/new',
-//   method: 'POST',
-//   dataType: 'json',
-//   data: $('.moviebtn').val()
-// })
-// .done(function(data) {
-//   console.log(data);
-// //displaySearchData(data);
-// })
-// .fail(function(error) {
-//   console.log(error);
-// })
-// });
-
-
-
-
-//   var genreElement = " ";
-//   var castElement = " ";
-//   dataJson.Genre.forEach(function(genre) {
-//     genreElement+= '<div class="ui tag red label"><p>'+ genre.name +'</p></div>';
-//   });
-//   dataJson.Cast.forEach(function(cast){
-//     castElement+='<li>'+ cast.name + ' as "' + cast.character + '"</li>';
-//   });
-
-
-//   var html = '<div class="header"><h2>'+ dataJson.Title +'</h2></div><div class="image content">'+
-//       '<div class="ui small circular image"><img src="https://image.tmdb.org/t/p/w500'+ dataJson.Poster +'">'+
-//      '</div><div class="description"><div class="ui header">Overview : </div>'+
-//         '<p>' + dataJson.Overview +'</p>'+'<p><input type="text" class="dial"></p>'+
-//         '<p>Genre:'+ genreElement +'</p></div></div>'+
-//         '<div class="ui list">'+
-//   '<a class="item">'+
-//     '<div class="header">New York City</div>'+
-//     'A lovely city'+
-//   '</a>'+
-//   '<a class="item">'+
-//     '<div class="header">Chicago</div>'+
-//     'Also quite a lovely city'+
-//   '</a>'+
-//   '<a class="item">'+
-//     '<div class="header">Los Angeles</div>'+
-//     'Sometimes can be a lovely city'+
-//   '</a>'+
-//   '<a class="item">'+
-//     '<div class="header">San Francisco</div>'+
-//     'What a lovely city'+
-//   '</a>'+
-// '</div>';
-
-
-
- // var html='<div class="image content"><div class="ui medium image"><img class="ui small circular image" src="https://image.tmdb.org/t/p/w500' + dataJson.Poster +
- // '" ></div></div><p>Title: '+ dataJson.Title + '</p><p>Release Date: '
- //  + dataJson.Release_date + '</p><p>Rating:'+ dataJson.Rating +
- //  '</p><p>Duration:'+ dataJson.Duration+' Minutes</p><p>Genre: <ul>' +genreElement+
- //  '</ul></p><p>Overview: '+ dataJson.Overview +'</p><p>Cast Details: <ul>'+
- //  castElement +'</ul></p>';
 
 $('.js-search-results').html(html);
- $('.js-search-results').show();
+$('.ui.accordion').accordion();
+
+$('.modal-show').click(function(){
+  var modalClass='.ui.modal.'+$(this).val();
+  var movieId = $(this).val();
+  console.log(movieId);
+$(modalClass).modal({
+    onApprove : function() {
+      $.ajax({
+        url: '/movies/new',
+        type: 'POST',
+        data: { movieId: movieId }
+      })
+        .done(function (data) {
+          console.log(data);
+
+        })
+        .fail(function (error) {
+          console.log(error);
+        });
+    }
+  })
+  .modal('show');
+
+
+});
+
+
+
+
+ 
+$('.js-search-results').show();
   
-//  $(".dial").val(dataJson.Rating).knob({
-//    "readOnly":true,
-//    "fgColor":"green",
-//    "width":"60",
-//    "thickness":".3",
-//    "min":0,
-//    "max":10
-// });
+  
+
+
 //  $('.js-search-results')
-//   .transition('slide down')
-// ;
+//   .transition('slide down');
+  
+ 
 }

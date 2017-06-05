@@ -4,13 +4,36 @@
     <meta charset="utf-8">
     <title>Node Capstone</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.10/semantic.css">
+    <link href='https://fonts.googleapis.com/css?family=ABeeZee' rel='stylesheet'>
     <link rel="stylesheet" href="/styles/main.css">
   </head>
 
 
   <body>
 
-    <div class="ui margin-top very padded text container segment ">
+
+<div class="ui left visible vertical inverted sidebar labeled icon menu">
+  <a class="item">
+    <i class="home icon"></i>
+    Home
+  </a>
+  <a class="item">
+    <i class="heart icon"></i>
+    Favorites<div class="floating ui red label">22</div>
+  </a>
+  <a class="item">
+    <i class="setting icon"></i>
+    Settings
+  </a>
+  <a class="item">
+    <i class="power icon"></i>
+    Log-out
+  </a>
+</div>
+
+
+
+    <div class="ui very padded text container segment ">
       <h2 class="ui header">Movie Search</h2>
       <p>Search for a movie with titles.We will find the movies for you to watch!</p>
     <form class="ui form js-search-form">
@@ -23,7 +46,7 @@
 <button class="ui basic button js-submit-search" type="submit">Submit</button>
 </form>
   </div>
-
+<div class="ui error message response"></div>
   <div class="ui margin-top very padded text container segment js-search-results">
   </div>
 
