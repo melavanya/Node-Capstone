@@ -1,4 +1,4 @@
-$(function() {
+$(function() { 
  $('.response').hide(); 
  $('.js-search-results').hide();
     $(".js-search-form").submit(function(e) {
@@ -7,9 +7,9 @@ $(function() {
     getMovie(searchTerm);
    });
 
-   $.getJSON('/movies/userFavorites', function (data) {
-     console.log(data);
-     $('.label').html(data.length);
+   $.getJSON('/users/favorites', function (data) {
+     favoriteMovies=data;
+     $('.fav-movies').html(data.length);
    });
 
 });
@@ -23,7 +23,6 @@ $.ajax({
   }
 })
 .done(function(data) {
-  console.log(data);
 displaySearchData(data);
 })
 .fail(function(error) {
@@ -62,7 +61,7 @@ function displaySearchData(dataJson){
 '<div class="item"><div class="header">Run-time:'+ movie.Duration + ' Minutes</div>'+
 '</div></div><div class="ui header">Rating:'+movie.Rating+'</div><p>Genre:</p>'+genreElement+
 '<p></p><p>Cast:</p><div class="ui list">'+castElement+'</div></div></div>'+
-'<div class="actions"><div class="ui positive labeled icon button">Add to Favorites!<i class="checkmark icon"></i>'+
+'<div class="actions"><div class="ui positive labeled icon button check-fav">Add to Favorites!<i class="checkmark icon"></i>'+
 '</div></div></div></div>';
 
 });
@@ -76,7 +75,7 @@ $('.ui.accordion').accordion();
 $('.modal-show').click(function(){
   var modalClass='.ui.modal.'+$(this).val();
   var movieId = $(this).val();
-  console.log(movieId);
+
 $(modalClass).modal({
     onApprove : function() {
       $.ajax({
@@ -85,23 +84,27 @@ $(modalClass).modal({
         data: { movieId: movieId }
       })
         .done(function (data) {
-          console.log(data);
-
+          
+          if(data.length === undefined){
+            swal(
+                  'Oops!',
+                  'Movie was already added on '+ data.dateAdded +'!',
+                  'success',
+              )
+          }
+          $('.fav-movies').html(data.length);
         })
         .fail(function (error) {
           console.log(error);
         });
-    }
+      }
+    
   })
   .modal('show');
 
 
 });
 
-
-
-
- 
 $('.js-search-results').show();
   
   

@@ -44,7 +44,7 @@ movieApi.post('/new', function (req, res, next) {
        }
      });
      if(flag === true){
-      res.json({message:`Movie was added already on : ${dateAdded}`});
+      res.json({dateAdded});
      }
      else{
      user.movies.push(
@@ -57,15 +57,6 @@ movieApi.post('/new', function (req, res, next) {
      res.send(user.movies);
      }
    });
-
-   movieApi.get('/userFavorites', function (req, res, next) {
-     User.findById(req.user._id, function (err, user) {
-       res.send(user.movies);
-     })
-   });
-   
-
-   
 });
 
 

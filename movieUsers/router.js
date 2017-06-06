@@ -106,6 +106,7 @@ router.post('/', (req, res) => {
     });
 });
 
+
 router.get('/', (req, res) => {
   return User
     .find()
@@ -134,7 +135,16 @@ router.get('/dashboard', function (req, res, next) {
   res.sendFile(path.resolve('public/profile.html'));
 });
 
+router.get('/logout', function(req, res) {
+  req.logout();
+  res.redirect('/');
+});
 
+router.get('/favorites', function (req, res, next) {
+  User.findById(req.user._id, function (err, user) {
+    res.send(user.movies);
+  });
+});
 
 
 
