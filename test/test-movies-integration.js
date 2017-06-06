@@ -21,10 +21,7 @@
         return closeServer();
       });
 
-
       describe('Users Sign-up', function() {
-
-      
 
       function randomNumber () {
         return Math.floor(Math.random() * 100 + 1);
@@ -39,8 +36,7 @@
           .post('/users')
           .send(User)
           .then(function(res) {
-            console.log(res.body);
-            res.body.granted.should.equal(true);
+            res.body.message.should.equal(User.username);
             });
           });
       });
@@ -48,10 +44,7 @@
 
   describe('Users Log-in', function() {
     
-
-      console.log(User);
       it('Should Log-in the existing Movie User', function() {
-       
         return chai.request(app)
           .post('/users/me')
           .send(User)
@@ -63,8 +56,6 @@
       });
 
     describe('Movie Search', function() {
-
-
       it('should get details of a movie', function() {
        var searchTerm = "Forrest Gump";
        var query = encodeURI(searchTerm);
@@ -72,9 +63,10 @@
           .get('/movies?query='+query)
           .then(function(res) {
             res.should.be.json;
-            res.body.Title.should.equal(searchTerm);
+            res.body[0].Title.should.equal(searchTerm);
             });
           });
       });
+
     });
     

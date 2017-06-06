@@ -8,8 +8,8 @@ const { Movies } = require('./models');
 
 movieApi.get("/", (req, res) => {
   Movies.getMovieId(req.query.query)
-    .then(function (movieId) {
-      Movies.getDataFromApi(movieId)
+    .then(function (Ids) {
+      Movies.getDataFromApi(Ids)
         .then(function (result) {
           Movies.getCastDetails(result)
             .then(function () {
@@ -59,6 +59,34 @@ movieApi.post('/new', function (req, res, next) {
    });
 });
 
+movieApi.get("/favorites", (req, res) => {
 
+  var favMovies=req.query.favoriteMovies;
+  var favmovieIds=[];
+  favMovies.forEach(function(movie){
+    favmovieIds.push(movie.movieId);
+  });
+      Movies.getDataFromApi(favmovieIds)
+        .then(function (result) {
+          Movies.getCastDetails(result)
+            .then(function () {
+              Movies.getResponseData()
+                .then(function (result) {
+                  console.log('in /favorites',result);
+                  res.json(result);
+                })
+                .catch(function (err) {
+                  console.log(err);
+                });
+            })
+            .catch(function (err) {
+              console.log(err);
+            });
+        })
+        .catch(function (err) {
+          console.log(err);
+        });
+    
+});
 
 module.exports = movieApi;

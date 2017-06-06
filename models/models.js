@@ -24,9 +24,6 @@ const Movies = {
           data.results.forEach(function (item) {
             movieId.push(item.id);
           });
-          console.log('movie ids in getMovieId',movieId.length);
-          console.log('result in getMovieId',result.length);
-          console.log('movie cast in getMovieId',movieCast.length);
           resolve(movieId);
         } else {
           reject("No movies found!!");
@@ -35,9 +32,9 @@ const Movies = {
     });
   },
 
-  getDataFromApi: function (movieId) {
+  getDataFromApi: function (Ids) {
      result = [];
-    var movieId = movieId;
+     movieId=Ids;
     var queryString = {
       parameters: { api_key: 'ccceb486c69dc202428bef9e18797cf3' }
     };
@@ -75,9 +72,6 @@ const Movies = {
               Duration: item.runtime
             });
           });
-          console.log('movie ids in getDataFromApi',movieId.length);
-          console.log('result in getDataFromApi',result.length);
-          console.log('movie cast in getDataFromApi',movieCast.length);
           resolve(result);
         })
         .catch(function (err) {
@@ -125,9 +119,6 @@ const Movies = {
               movieCast.push({ MovieId: item.id, CastInfo: undefined });
             }
           });
-          console.log('movie ids in getCastDetails',movieId.length);
-          console.log('result in getCastDetails',result.length);
-          console.log('movie cast in getCastDetails',movieCast.length);
           resolve();
         })
         .catch(function (err) {
@@ -144,7 +135,6 @@ const Movies = {
         for (var i = 0; i < result.length; i++) {
           if (result[i].MovieId === movieCast[i].MovieId) {
             result[i].CastInfo = movieCast[i].CastInfo;
-            console.log(result[i].CastInfo);
                     }
         }
         resolve(result);

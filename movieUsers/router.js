@@ -99,7 +99,7 @@ router.post('/', (req, res) => {
     })
     .then(user => {
       console.log(user);
-      return res.status(200).json({message: `Welcome ${user.username}! Please log-in to search for Movies!`});
+      return res.status(200).json({message:user.username});
     })
     .catch(err => {
       res.status(500).json({message: 'Internal server error'})
@@ -135,10 +135,7 @@ router.get('/dashboard', function (req, res, next) {
   res.sendFile(path.resolve('public/profile.html'));
 });
 
-router.get('/logout', function(req, res) {
-  req.logout();
-  res.redirect('/');
-});
+
 
 router.get('/favorites', function (req, res, next) {
   User.findById(req.user._id, function (err, user) {
@@ -146,6 +143,11 @@ router.get('/favorites', function (req, res, next) {
   });
 });
 
+router.get('/logout', function(req, res) {
+  req.logout();
+  req.session.destroy();
+  console.log('User logged out');
+});
 
 
 module.exports = {router};

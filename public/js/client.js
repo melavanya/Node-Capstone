@@ -3,10 +3,8 @@
 $(function() {
   $('.response').hide();
   $('.menu .item').tab();
-
-
   $('.js-signup-form').submit(function (e) {
-        e.preventDefault();
+    e.preventDefault();
     const signUpData = {
       username: $('.js-signup-username').val(),
       password: $('.js-signup-password').val(),
@@ -19,10 +17,16 @@ $(function() {
   data: signUpData
 })
 .done(function(data) {
+  $(".js-signup-form").trigger("reset");
+  swal({
+  title: 'Welcome '+ data.message +'!!',
+  text: 'Please Log-in to search for Movies!',
+  width: 600,
+  padding: 100,
+  background: '#fff url(//bit.ly/1Nqn9HU)'
+})
+  $('.response').hide();
   $('.menu .item').tab('change tab', 'log-in');
-  $('.response').show();
-  $('.response').html('<p>' + data.message + '</p>');
-
 })
 .fail(function(error) {
   $('.response').show();
@@ -53,10 +57,12 @@ $('.js-login-form').submit(function (e) {
   if(error.responseText === "error") {
     $('.response').show();
     $('.response').html('<p>' + "User not found. Please sign-up!" + '</p>');
+    $(".js-login-form").trigger("reset");
   }
   if(error.responseText === "Unauthorized") {
     $('.response').show();
     $('.response').html('<p>' + "Username or Password incorrect !!" + '</p>');
+    $(".js-login-form").trigger("reset");
   }
   if(error.responseText === "Bad Request") {
     $('.response').show();
@@ -65,6 +71,7 @@ $('.js-login-form').submit(function (e) {
 })
 
  });
+
 
  });
 
