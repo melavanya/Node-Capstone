@@ -1,8 +1,6 @@
 var favoriteMovies = [];
 $(function () {
-  $('.response').hide();
   $('.js-search-results').hide();
-
   $(".js-search-form").submit(function (e) {
     e.preventDefault();
     var searchTerm = $(this).find(".js-search-input").val();
@@ -11,7 +9,6 @@ $(function () {
 
   $.getJSON('/users/favorites', function (data) {
     favoriteMovies = data;
-    //console.log('in getJson',favoriteMovies)
     $('.fav-movies').html(data.length);
   });
 
@@ -21,24 +18,8 @@ $(function () {
     });
   });
 
-  $('.favorites').click(function () {
-    
-    $.ajax({
-      url: '/movies/favorites',
-      dataType: 'json',
-      data: {favoriteMovies},
-      type:'GET'
-    })
-   .done(function(response) {
-        console.log(response);
-      })
-  .fail(function (error) {
-        console.log('error');
-      });
 
-  });
 });
-
 function getMovie(searchTerm) {
   $.ajax({
     url: '/movies',

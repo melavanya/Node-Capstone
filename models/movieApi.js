@@ -5,7 +5,7 @@ const jsonParser = bodyParser.json();
 const {User} = require('../movieUsers/User-model');
 const moment = require('moment');
 const { Movies } = require('./models');
-
+const path = require('path');
 movieApi.get("/", (req, res) => {
   Movies.getMovieId(req.query.query)
     .then(function (Ids) {
@@ -59,11 +59,13 @@ movieApi.post('/new', function (req, res, next) {
    });
 });
 
-movieApi.get("/favorites", (req, res) => {
+movieApi.get("/favorites", (req, res, next) => {
+res.sendFile(path.resolve('public/dashboard.html'));
+});
 
-  var favMovies=req.query.favoriteMovies;
+movieApi.get("/fav-movies", (req, res, next) => {
   var favmovieIds=[];
-  favMovies.forEach(function(movie){
+  req.user.movies.forEach(function(movie){
     favmovieIds.push(movie.movieId);
   });
       Movies.getDataFromApi(favmovieIds)
@@ -72,8 +74,7 @@ movieApi.get("/favorites", (req, res) => {
             .then(function () {
               Movies.getResponseData()
                 .then(function (result) {
-                  console.log('in /favorites',result);
-                  res.json(result);
+                  res.send(result);
                 })
                 .catch(function (err) {
                   console.log(err);
