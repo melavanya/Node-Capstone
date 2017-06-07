@@ -90,4 +90,23 @@ movieApi.get("/fav-movies", (req, res, next) => {
     
 });
 
+movieApi.delete('/delete',(req,res,next) =>{
+User.findById(req.user._id, function(err,user) {
+var movieId = parseInt(req.body.movieId);
+user.movies.forEach(function(movie,index){
+if(movieId === movie.movieId){
+  user.movies.splice(index,1);
+}
+});
+user.save(function (err) {
+       console.log('movie deleted');
+     });
+
+ res.json(user.movies); 
+
+});
+
+});
+
+
 module.exports = movieApi;
