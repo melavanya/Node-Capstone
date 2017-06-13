@@ -1,59 +1,59 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <!--<meta name="viewport" content="width=device-width, initial-scale=1.0">-->
-    <title>Node Capstone</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.6.5/sweetalert2.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.10/semantic.css">
-    <link href='https://fonts.googleapis.com/css?family=ABeeZee' rel='stylesheet'>
-    <link rel="stylesheet" href="/styles/main.css">
-  </head>
 
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Movie Diary</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.6.5/sweetalert2.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.10/semantic.css">
+  <link href='https://fonts.googleapis.com/css?family=ABeeZee' rel='stylesheet'>
+  <link rel="stylesheet" href="/styles/main.css">
+</head>
 
-  <body>
+<body>
 
-
-<div class="ui left visible vertical inverted sidebar labeled icon menu">
-  <a href="/users/dashboard" class="item">
-    <i class="home icon"></i>
-    Home
-  </a>
-  <a href="/movies/favorites" class="item favorites">
-    <i class="heart icon"></i>
-    Favorites<div class="floating ui red label fav-movies"></div>
-  </a>
-  <a href="/" class="item log-out">
-    <i class="power icon"></i>
-    Log-out
-  </a>
-</div>
-
-
-
-    <div class="ui very padded text container segment ">
-      <h2 class="ui header">Movie Search</h2>
-      <p>Search for a movie with titles. We will find the movies for you to watch!</p>
-    <form class="ui form js-search-form">
-      <div class="ui inverted  left corner labeled input">
-        <input type="text" class =" js-search-input" placeholder="Movie Title">
-        <div class="ui left corner label">
-          <i class="asterisk icon"></i>
-        </div>
+  <div class="ui rail">
+    <div class="ui sticky fixed-nav">
+      <div class="ui black big launch right attached fixed button">
+        <i class="content icon"></i>
       </div>
-<button class="ui basic button js-submit-search" type="submit">Submit</button>
-</form>
-  </div>
-  <div class="ui margin-top very padded text container segment js-search-results">
+    </div>
   </div>
 
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js">
-    </script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.10/semantic.js">
-    </script>
-        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.6.5/sweetalert2.min.js">
-    </script>
-    <script type="text/javascript" src="/js/movie.js">
-    </script>
-  </body>
+  <div id="context">
+        <div class="ui left vertical inverted sidebar labeled icon menu">
+          <a href="/users/dashboard" class="item"> <i class="home icon"></i>Home</a>
+          <a href="/movies/favorites" class="item favorites"><i class="heart icon"></i>Favorites<div class="floating ui red label fav-movies"></div></a>
+          <a href="/" class="item log-out"><i class="power icon"></i>Log-out</a>
+        </div>
+
+
+
+        <div class="ui very padded text container segment ">
+          <h2 class="ui header">Movie Search</h2>
+          <p>Search for a movie with titles. We will find the movies for you to watch!</p>
+
+          <form class="ui form js-search-form">
+            <div class="ui inverted  left corner labeled input">
+              <input type="text" class=" js-search-input" placeholder="Movie Title">
+              <div class="ui left corner label">
+                <i class="asterisk icon"></i>
+              </div>
+            </div>
+            <button class="ui basic button js-submit-search" type="submit">Submit</button>
+          </form>
+          
+        </div>
+
+        <div class="ui margin-top very padded text container segment js-search-results"></div>
+  </div>
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.10/semantic.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.6.5/sweetalert2.min.js"></script>
+  <script type="text/javascript" src="/js/movie.js"></script>
+
+</body>
+
 </html>

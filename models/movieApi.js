@@ -6,30 +6,37 @@ const {User} = require('../movieUsers/User-model');
 const moment = require('moment');
 const { Movies } = require('./models');
 const path = require('path');
+
+
 movieApi.get("/", (req, res) => {
   Movies.getMovieId(req.query.query)
     .then(function (Ids) {
-      Movies.getDataFromApi(Ids)
-        .then(function (result) {
-          Movies.getCastDetails(result)
-            .then(function () {
-              Movies.getResponseData()
-                .then(function (result) {
-                  res.json(result);
-                })
-                .catch(function (err) {
-                  console.log(err);
-                });
-            })
-            .catch(function (err) {
-              console.log(err);
-            });
+     Movies.getDataFromApi(Ids)
+    .then(function (result) {
+      Movies.getCastDetails(result)
+    .then(function () {
+      Movies.getResponseData()
+    .then(function (result) {
+      res.json(result);
         })
-        .catch(function (err) {
-          console.log(err);
-        });
-    })
+
     .catch(function (err) {
+      res.json({Error:err});
+      console.log(err);
+       });
+       })
+    .catch(function (err) {
+     res.json({Error:err});
+     console.log(err);
+        });
+        })
+    .catch(function (err) {
+     res.json({Error:err});
+      onsole.log(err);
+        });
+        })
+    .catch(function (err) {
+      res.json({Error:err});
       console.log(err);
     });
 });
@@ -70,21 +77,24 @@ movieApi.get("/fav-movies", (req, res, next) => {
   });
       Movies.getDataFromApi(favmovieIds)
         .then(function (result) {
-          Movies.getCastDetails(result)
-            .then(function () {
-              Movies.getResponseData()
-                .then(function (result) {
-                  res.send(result);
-                })
-                .catch(function (err) {
-                  console.log(err);
-                });
+         Movies.getCastDetails(result)
+        .then(function () {
+          Movies.getResponseData()
+        .then(function (result) {
+          res.send(result);
             })
-            .catch(function (err) {
-              console.log(err);
-            });
-        })
         .catch(function (err) {
+         res.json({Error:err});
+         console.log(err);
+            });
+            })
+        .catch(function (err) {
+          res.json({Error:err});
+          console.log(err);
+           });
+           })
+        .catch(function (err) {
+          res.json({Error:err});
           console.log(err);
         });
     
@@ -101,12 +111,8 @@ if(movieId === movie.movieId){
 user.save(function (err) {
        console.log('movie deleted');
      });
-
  res.json(user.movies); 
-
 });
-
 });
-
 
 module.exports = movieApi;

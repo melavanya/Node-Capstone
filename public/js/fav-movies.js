@@ -2,15 +2,23 @@ $(function () {
     $('.js-search-results').hide();
     getFavMovieCount();
     getFavMovieDetails();
+
+    //Sidebar Toggle
+    $('.ui.fixed.button').click(function (e) {
+        e.preventDefault();
+        $('.ui.sidebar').sidebar('toggle');
+    });
+
+    //User Log-out    
     $('.log-out').click(function () {
         $.getJSON('/users/logout', function () {
             console.log('user logged out');
         });
     });
-});
+});//End of JQuery Line
 
 
-
+//Display number of favorite movies
 function getFavMovieCount() {
     $.getJSON('/users/favorites', function (data) {
         favoriteMovies = data;
@@ -18,6 +26,7 @@ function getFavMovieCount() {
     });
 }
 
+//Get favorite Movie details
 function getFavMovieDetails() {
     $.getJSON('/movies/fav-movies', function (data) {
         for (var i = 0; i < favoriteMovies.length; i++) {
@@ -28,29 +37,25 @@ function getFavMovieDetails() {
         displaySearchData(data);
     });
 }
+
+//Display details of the favorite Movies
 function displaySearchData(dataJson) {
     $('.js-search-results').html('');
     var html = "";
     html += '<div class="ui small images">';
-
-
     dataJson.forEach(function (movie) {
         var genreElement = " ";
         var castElement = " ";
-
         movie.Genre.forEach(function (genre) {
             genreElement += '<div class="ui tag red label">' + genre.name + '</div>';
         });
-
         if (movie.CastInfo !== undefined) {
             movie.CastInfo.forEach(function (cast) {
                 castElement += '<div class="item"><div class="header">' + cast.castName + '</div> As ' + cast.characterName + '</div>';
             });
         }
         html += '<div class="ui small spaced image"><div class="ui black ribbon label"><i class="plus icon"></i>' + movie.dateAdded + '</div>' +
-            '<a  class="modal-show" id="' + movie.MovieId + '"><img src="https://image.tmdb.org/t/p/w500' + movie.Poster + '"></a></div>' +
-
-
+            '<a class="modal-show" id="' + movie.MovieId + '"><img src="https://image.tmdb.org/t/p/w500' + movie.Poster + '"></a></div>' +
             '<div class="ui modal ' + movie.MovieId + '"><i class="close icon"></i><div class="header">' + movie.Title +
             '</div><div class="image content"><div class="ui medium image"><img src="https://image.tmdb.org/t/p/w500' + movie.Poster + '">' +
             '</div><div class="description"><div class="ui header">' + movie.Overview +
@@ -65,12 +70,9 @@ function displaySearchData(dataJson) {
     html += '</div>';
     $('.js-search-results').html(html);
 
-
     $('.modal-show').click(function () {
         var modalClass = '.ui.modal.' + $(this).attr('id');
-        console.log(modalClass);
         var movieId = $(this).attr('id');
-
         $(modalClass).modal({
             onDeny: function () {
                 swal({
@@ -82,7 +84,6 @@ function displaySearchData(dataJson) {
                     cancelButtonColor: '#d33',
                     confirmButtonText: 'Yes, delete it!'
                 }).then(function () {
-
                     $.ajax({
                         url: '/movies/delete',
                         data: { movieId: movieId },
@@ -93,26 +94,16 @@ function displaySearchData(dataJson) {
                             getFavMovieDetails();
                         })
                         .fail(function (error) {
-                            console.log(error);
+                            console.log('Error Occured.',error);
                         });
                     swal(
                         'Deleted!',
-                        'Your file has been deleted.',
+                        'Movie has been deleted from your favorite list.',
                         'success'
                     )
                 })
-
-
-
             }
-
-        })
-            .modal('show');
-
+        }).modal('show');
     });
-
     $('.js-search-results').show();
-
-
-
 }

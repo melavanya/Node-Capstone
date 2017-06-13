@@ -3,84 +3,89 @@
 
 <head>
   <meta charset="utf-8">
-  <title>Node Capstone</title>
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.6.5/sweetalert2.min.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Movie Diary</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.6.5/sweetalert2.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.10/semantic.css">
   <link href="https://fonts.googleapis.com/css?family=Slabo+27px" rel="stylesheet">
   <link rel="stylesheet" href="./styles/main.css">
 </head>
 
+
 <body>
 
-  <div class="ui raised very padded text container segment ">
+  <div class="ui raised very padded text stackable container segment">
 
-    <div class="ui top attached tabular menu">
-      <a class="item active" data-tab="home">Home<i class="home icon"></i></a>
-      <a class="item" data-tab="log-in">Log-in<i class="user icon"></i></a>
-      <a class="item" data-tab="sign-up">Sign-up<i class="add user icon"></i></a>
-    </div>
-
-
-    <div class="ui bottom attached tab segment active" data-tab="home">
-      <h2>Movie search</h2>
-    </div>
-
-    <div class="ui bottom attached tab segment" data-tab="log-in">
-      <div class="ui error message response"></div>
-      <div class="ui middle aligned center aligned grid">
-        <div class="column">
-          <form class="ui large form js-login-form">
-              <div class="field">
-                <div class="ui left icon input">
-                  <i class="user icon"></i>
-                  <input type="text" class="js-login-username" name="username" placeholder="UserName" class="username">
-                </div>
-              </div>
-              <div class="field">
-                <div class="ui left icon input">
-                  <i class="lock icon"></i>
-                  <input type="password" class="js-login-password" name="password" placeholder="Password">
-                </div>
-              </div>
-              <button type="submit" class="ui fluid large teal submit button log-in" value="submit">Login</button>
-          </form>
-        </div>
+      <div class="ui top attached tabular stackable menu">
+        <a class="item active" data-tab="home">Home<i class="home icon"></i></a>
+        <a class="item" data-tab="log-in">Log-in<i class="user icon mar-left"></i></a>
+        <a class="item" data-tab="sign-up">Sign-up<i class="add user icon mar-left"></i></a>
       </div>
+
+      <div class="ui bottom attached tab stackable segment active" data-tab="home">
+        <h2 class="text-center">Movie Diary</h2>
+        <p>A place where you explore movies!!</p>
+          <p>You can save the details of the ones you like in the Diary and get the list of your favorites back without flipping pages!</p>
+      </div>
+
+      <div class="ui bottom attached tab stackable segment" data-tab="log-in">
+          <div class="ui error message response"></div>
+          
+          <div class="ui middle aligned center aligned grid">
+                <div class="column">
+                  <form class="ui large form js-login-form">
+
+                    <div class="field">
+                      <div class="ui left icon input">
+                        <i class="user icon"></i>
+                        <input type="text" class="js-login-username" name="username" placeholder="Username" class="username">
+                      </div>
+                    </div>
+
+                    <div class="field">
+                      <div class="ui left icon input">
+                        <i class="lock icon"></i>
+                        <input type="password" class="js-login-password" name="password" placeholder="Password">
+                      </div>
+                    </div>
+
+                    <button type="submit" class="ui fluid large teal submit button log-in" value="submit">Login</button>
+                  </form>
+                </div>
+          </div>
     </div>
 
     <div class="ui bottom attached tab segment" data-tab="sign-up">
-      <div class="ui error message response"></div>
+          <h3 class="center">Please sign-up to use the Diary features.</h3>
+          <div class="ui error message response"></div>
 
-      <form class="ui form js-signup-form">
-        <div class="field">
-          <label>First Name</label>
-          <input type="text" class="js-signup-firstname" name="firstname" placeholder="First Name">
-        </div>
-        <div class="field">
-          <label>Last Name</label>
-          <input type="text" class="js-signup-lastname" name="lastname" placeholder="Last Name">
-        </div>
-        <div class="field">
-          <label>UserName:</label>
-          <input type="text" class="js-signup-username" name="username" placeholder="UserName">
-        </div>
-        <div class="field">
-          <label>Password</label>
-          <input type="password" class="js-signup-password" name="password" placeholder="Password">
-        </div>
-        <button class="ui fluid large teal submit button" type="submit">Sign Up</button>
-      </form>
+          <form class="ui form js-signup-form">
+
+            <div class="field">
+              <input type="text" class="js-signup-firstname" name="firstname" placeholder="First Name">
+            </div>
+
+            <div class="field">
+              <input type="text" class="js-signup-lastname" name="lastname" placeholder="Last Name">
+            </div>
+
+            <div class="field">
+              <input type="text" class="js-signup-username" name="username" placeholder="UserName">
+            </div>
+
+            <div class="field">
+              <input type="password" class="js-signup-password" name="password" placeholder="Password">
+            </div>
+
+            <button class="ui fluid large teal submit button" type="submit">Sign Up</button>
+          </form>
     </div>
   </div>
-  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js">
-
-  </script>
-  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.10/semantic.js">
-  </script>
-  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.6.5/sweetalert2.min.js">
-    </script>
-
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.10/semantic.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.6.5/sweetalert2.min.js"></script>
   <script src="./js/client.js" charset="utf-8"></script>
+
 </body>
 
 </html>

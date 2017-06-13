@@ -2,21 +2,23 @@
   font-family: 'ABeeZee';
   font-size: 17px;
 }
-
 html,body{
 height: 100%;
 }
 body{
   background-image: url("../images/background.jpg");
   background-repeat: no-repeat;
-  background-size: cover;
-  
+  background-size: inherit; 
+}
+body.pushable > .pusher {
+  background-image: url("../images/background.jpg") !important;
+  background-repeat: no-repeat;
+  background-size:cover;
 }
 .ui.segment{
   background-color: white;
   border-style: none;
 }
-
 .ui.segment.container {
   margin-top: 50px;
 }
@@ -37,4 +39,17 @@ left:80px;
 }
 .ui.accordion.movie-results{
   overflow: scroll;
+}
+a{
+  cursor:pointer;
+}
+.fixed-nav{
+  position: fixed;
+  top:10px;
+}
+
+@media only screen and (min-width: 1017px) {
+    body {
+        background-size:cover; 
+    }
 }
