@@ -2,6 +2,15 @@ $(function () {
   $('.response').hide();
   $('.menu .item').tab();
 
+//Demo Account
+$('.js-demo').click(function (e) {
+ e.preventDefault();
+ swal(
+  'Demo Account Details:',
+  'Username: test  and Password: 1234'
+)
+});
+
 //Sign-up Form submission
   $('.js-signup-form').submit(function (e) {
           e.preventDefault();
@@ -48,6 +57,7 @@ $(function () {
             data: loginData
           })
             .done(function (data) {
+            $('.response').hide();
               if (data.granted === true) {
                 window.location = data.redirectTo;
               }
