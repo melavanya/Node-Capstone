@@ -2,6 +2,12 @@ var favoriteMovies = [];
 $(function () {
   $('.js-search-results').hide();
 
+  var viewportWidth = $(window).width();
+  if (viewportWidth <= 500) {
+    console.log('width is changing');
+    $('.full-menu').css('display', 'none');
+  }
+
   //Sidebar toggle button
   $('.ui.fixed.button').click(function (e) {
     e.preventDefault();
@@ -12,7 +18,14 @@ $(function () {
   $(".js-search-form").submit(function (e) {
     e.preventDefault();
     var searchTerm = $(this).find(".js-search-input").val();
+    $('.js-submit-search').addClass('loading');
+    $('.js-search-input').parent().addClass('disabled');
+    setTimeout(function () {
+      $('.js-submit-search').removeClass('loading');
+      $('.js-search-input').parent().removeClass('disabled');
+    }, 5000);
     getMovies(searchTerm);
+    //setTiemout
   });
 
   //Favorites button Display
@@ -39,6 +52,7 @@ function getMovies(searchTerm) {
     data: { query: searchTerm }
   })
     .done(function (data) {
+      console.log(data);
       if (data.length !== undefined) {
         displaySearchData(data);
       }
@@ -60,6 +74,7 @@ function getMovies(searchTerm) {
 
 //Display Movies
 function displaySearchData(dataJson) {
+  console.log(dataJson)
   $('.js-search-results').html('');
   var html = '';
   html += '<div class="ui styled fluid accordion movie-results">';
@@ -76,45 +91,70 @@ function displaySearchData(dataJson) {
     }
     html += '<div><div class="title"><i class="dropdown icon"></i>' + movie.Title +
       '</div><div class=" ui content"><p>' + movie.Overview + '</p><button class="ui green button modal-show" value="' + movie.MovieId + '">Details</button></div>' +
-      '<div class="ui modal ' + movie.MovieId + '"><i class="close icon"></i><div class="header">' + movie.Title +
-      '</div><div class="image content"><div class="ui medium image"><img src="https://image.tmdb.org/t/p/w500' + movie.Poster + '">' +
+      '<div class="ui modal coupled ' + movie.MovieId + '" id=' + movie.MovieId + '><i class="close icon"></i><div class="header">' + movie.Title +
+      '</div><div class="image content"><div class="ui image"><img class="poster-img" src="https://image.tmdb.org/t/p/w500' + movie.Poster + '">' +
       '</div><div class="description"><div class="ui header">' + movie.Overview +
       '</div><div class="ui horizontal list"><div class="item"><div class="header">Released On:' + movie.Release_Date + '</div></div>' +
       '<div class="item"><div class="header">Run-time:' + movie.Duration + ' Minutes</div>' +
       '</div></div><div class="ui header">Rating:' + movie.Rating + '</div><p>Genre:</p>' + genreElement +
       '<p></p><p>Cast:</p><div class="ui list">' + castElement + '</div></div></div>' +
-      '<div class="ui actions"><div class="ui positive labeled icon button check-fav">Add to Favorites!<i class="checkmark icon"></i>' +
-      '</div></div></div></div>';
+      '<div class="ui actions"><div class="ui positive labeled icon button check-fav" id=' + movie.MovieId + '>Add to Favorites!<i class="checkmark icon"></i>' +
+      '</div></div></div></div>' +
+      '<div class="ui mini modal coupled second ' + movie.MovieId + '" id=2' + movie.MovieId + ' ><div class="header">Your Comments!</div><div class="content">' +
+      '<div class="ui form comments"><div class="field"><textarea id="comment' + movie.MovieId + '" rows="2"></textarea></div>' +
+      '</div></div><div class="actions"><div class="ui positive button">Save</div>' +
+      '</div></div>';
   });
   html += '</div>';
 
   $('.js-search-results').html(html);
   $('.ui.accordion').accordion();
   $('.modal-show').click(function () {
-    var modalClass = '.ui.modal.' + $(this).val();
+
     var movieId = $(this).val();
-    $(modalClass).modal({
+
+
+
+    $('.coupled.modal')
+      .modal({
+        allowMultiple: false
+      });
+
+    $('#2' + $(this).val()).modal('attach events', '#' + $(this).val());
+    $('#' + $(this).val()).modal('show');
+
+
+
+    $('#2' + $(this).val()).modal({
       onApprove: function () {
+        var comment = $('#comment' + movieId).val();
         $.ajax({
           url: '/movies/new',
           type: 'POST',
-          data: { movieId: movieId }
+          data: {
+            movieId: movieId,
+            comment: comment
+          }
         })
-        .done(function (data) {
+          .done(function (data) {
             if (data.length === undefined) {
               swal(
-                'Movie was already added to Favorites on ' + data.dateAdded + '!',
-                'success',
+                'Movie was already added to Favorites on ' + data.dateAdded + '!'
               )
             }
             favoriteMovies = data;
             $('.fav-movies').html(data.length);
+            swal(
+              'Movie added to Favorites!'
+            )
           })
-        .fail(function (error) {
-            console.log('Error Occured.',error);
+          .fail(function (error) {
+            console.log('Error Occured.', error);
           });
+
       }
-    }).modal('show');
+    });
   });
+
   $('.js-search-results').show();
 }

@@ -3,11 +3,17 @@ $(function () {
     getFavMovieCount();
     getFavMovieDetails();
 
+    var viewportWidth = $(window).width();
+if (viewportWidth <= 500) {
+  console.log('width is changing');
+  $('.full-menu').css('display', 'none');
+}
     //Sidebar Toggle
     $('.ui.fixed.button').click(function (e) {
         e.preventDefault();
         $('.ui.sidebar').sidebar('toggle');
     });
+
 
     //User Log-out    
     $('.log-out').click(function () {
@@ -32,6 +38,7 @@ function getFavMovieDetails() {
         for (var i = 0; i < favoriteMovies.length; i++) {
             if (favoriteMovies[i].movieId === data[i].MovieId) {
                 data[i].dateAdded = favoriteMovies[i].dateAdded;
+                data[i].comment = favoriteMovies[i].comment;
             }
         }
         displaySearchData(data);
@@ -44,6 +51,7 @@ function displaySearchData(dataJson) {
     var html = "";
     html += '<div class="ui small images">';
     dataJson.forEach(function (movie) {
+        console.log(movie.comment)
         var genreElement = " ";
         var castElement = " ";
         movie.Genre.forEach(function (genre) {
@@ -57,8 +65,8 @@ function displaySearchData(dataJson) {
         html += '<div class="ui small spaced image"><div class="ui black ribbon label"><i class="plus icon"></i>' + movie.dateAdded + '</div>' +
             '<a class="modal-show" id="' + movie.MovieId + '"><img src="https://image.tmdb.org/t/p/w500' + movie.Poster + '"></a></div>' +
             '<div class="ui modal ' + movie.MovieId + '"><i class="close icon"></i><div class="header">' + movie.Title +
-            '</div><div class="image content"><div class="ui medium image"><img src="https://image.tmdb.org/t/p/w500' + movie.Poster + '">' +
-            '</div><div class="description"><div class="ui header">' + movie.Overview +
+            '</div><div class="image content"><div class="ui image"><img src="https://image.tmdb.org/t/p/w500' + movie.Poster + '">' +
+            '</div><div class="description"><div class="ui header">' + movie.Overview +'<p>Your Comment</p><p>'+ movie.comment +'</p>'+
             '</div><div class="ui horizontal list"><div class="item"><div class="header">Released On:' + movie.Release_Date + '</div></div>' +
             '<div class="item"><div class="header">Run-time:' + movie.Duration + ' Minutes</div>' +
             '</div></div><div class="ui header">Rating:' + movie.Rating + '</div><p>Genre:</p>' + genreElement +

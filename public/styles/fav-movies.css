@@ -2,18 +2,26 @@
   font-family: 'ABeeZee';
   font-size: 17px;
 }
-html,body{
-height: 100%;
-}
 body{
-  background-image: url("../images/background.jpg");
+  background-image: url("../images/image.jpg") !important;
   background-repeat: no-repeat;
-  background-size: inherit; 
+  background-size:cover; 
+  background-position: center;
+  height:auto;
+  /*-webkit-filter: blur(5px);
+  -moz-filter: blur(5px);
+  -o-filter: blur(5px);
+  -ms-filter: blur(5px);
+  filter: blur(5px);*/
 }
 body.pushable > .pusher {
-  background-image: url("../images/background.jpg") !important;
+  background-image: url("../images/image.jpg") !important;
   background-repeat: no-repeat;
   background-size:cover;
+}
+.ui.segment{
+  background-image: url("../images/image.jpg");
+  background-repeat: no-repeat;
 }
 .ui.segment{
   background-color: white;
@@ -47,9 +55,23 @@ a{
   position: fixed;
   top:10px;
 }
-
+.responsive-menu{
+  display: none;
+}
 @media only screen and (min-width: 1017px) {
     body {
         background-size:cover; 
     }
+}
+
+@media only screen and (max-width: 500px) {
+  /*.full-menu {
+    display: none !important;
+  }*/
+  .responsive-menu{
+    display: block;
+  }
+  /*.full-menu.visible {
+    display: none !important;
+  }*/
 }

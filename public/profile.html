@@ -13,35 +13,41 @@
 
 <body>
 
-  <div class="ui rail">
+  <div class="ui rail responsive-menu">
     <div class="ui sticky fixed-nav">
       <div class="ui black big launch right attached fixed button">
         <i class="content icon"></i>
       </div>
     </div>
   </div>
+  <!--<div class="ui stackable container full-menu menu">
+    <div class="item">
+      <img src="assets/images/logo.png">
+    </div>
+    <a class="item">Features</a>
+    <a class="item">Testimonials</a>
+    <a class="item">Sign-in</a>
+  </div>-->
 
   <div id="context">
-        <div class="ui left vertical inverted sidebar labeled icon menu">
+        <div class="ui left vertical inverted visible sidebar labeled icon full-menu menu">
           <a href="/users/dashboard" class="item"> <i class="home icon"></i>Home</a>
           <a href="/movies/favorites" class="item favorites"><i class="heart icon"></i>Favorites<div class="floating ui red label fav-movies"></div></a>
           <a href="/" class="item log-out"><i class="power icon"></i>Log-out</a>
         </div>
 
-
-
-        <div class="ui very padded text container segment ">
+        <div class="ui very padded text container segment clear ">
           <h2 class="ui header">Movie Search</h2>
           <p>Search for a movie with titles. We will find the movies for you to watch!</p>
 
           <form class="ui form js-search-form">
-            <div class="ui inverted  left corner labeled input">
-              <input type="text" class=" js-search-input" placeholder="Movie Title">
+            <div class="ui inverted left corner labeled input">
+              <input type="text" class="js-search-input" placeholder="Movie Title">
               <div class="ui left corner label">
                 <i class="asterisk icon"></i>
               </div>
             </div>
-            <button class="ui basic button js-submit-search" type="submit">Submit</button>
+            <button class="ui button js-submit-search" type="submit">Submit</button>
           </form>
           
         </div>
@@ -51,6 +57,7 @@
   
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.10/semantic.js"></script>
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>  
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.6.5/sweetalert2.min.js"></script>
   <script type="text/javascript" src="/js/movie.js"></script>
 

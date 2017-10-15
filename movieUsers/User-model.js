@@ -16,7 +16,8 @@ const UserSchema = mongoose.Schema({
   lastName: {type: String, default: ""},
   movies: [{
     dateAdded: String,
-    movieId : Number
+    movieId : Number,
+    comment: String
   }]
 });
 

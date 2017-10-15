@@ -1,24 +1,77 @@
 * {
   font-family: 'ABeeZee';
   font-size: 17px;
+  color: white
 }
-html,body{
-height: 100%;
-}
+
 body{
-  background-image: url("../images/background.jpg") !important;
+  background-image: url("../images/image.jpg") !important;
   background-repeat: no-repeat;
-  background-size:inherit; 
+  background-size:cover; 
+  background-position: center;
+  height:auto;
+  /* -webkit-filter: blur(5px);
+  -moz-filter: blur(5px);
+  -o-filter: blur(5px);
+  -ms-filter: blur(5px);
+  filter: blur(5px); */
 }
 body.pushable > .pusher {
-  background-image: url("../images/background.jpg") !important;
+  background-image: url("../images/image.jpg") !important;
   background-repeat: no-repeat;
   background-size:cover;
 }
 .ui.segment{
-  background-image: url("../images/background.jpg");
+  background-image: url("../images/image.jpg");
   background-repeat: no-repeat;
 }
+/* .ui.clear{
+  background: transparent;
+  box-shadow: none;
+  border: none;
+} */
+.ui.clear h2, p {
+  color: #FFF;
+  text-shadow: 1px 2px 2px #000;
+}
+
+.ui.clear.active {
+  border: none;
+}
+.white{
+  color:white !important;
+}
+.ui.movie-results p {
+  color: #000;
+  text-shadow: none;
+}
+
+.placeholder {
+  background-color: transparent !important;
+    border: none !important;
+    border-bottom: 1px solid #FFF !important;
+    color: #FFF !important;
+}
+
+.placeholder::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+  color: #FFF !important;
+}
+.placeholder::-moz-placeholder { /* Firefox 19+ */
+  color: #FFF !important;
+}
+.placeholder:-ms-input-placeholder { /* IE 10+ */
+  color: #FFF !important;
+}
+.placeholder:-moz-placeholder { /* Firefox 18- */
+  color: #FFF !important;
+}
+.ui.tabular.menu .active.item{
+  background: transparent;
+  color: #FFF;
+  border: none;
+}
+
+
 .ui.segment.container {
   margin-top: 50px;
 }
@@ -52,8 +105,30 @@ left:80px;
   position: fixed;
   top:10px;
 }
+.responsive-menu{
+  display: none;
+}
+.ui.button.js-submit-search{
+  background-color: #fff;
+}
+
+.ui.image svg, .ui.image img.poster-img{
+  max-width: 240px;
+}
 @media only screen and (min-width: 1017px) {
     body {
         background-size:cover; 
     }
+}
+
+@media only screen and (max-width: 500px) {
+  /*.full-menu {
+    display: none !important;
+  }*/
+  .responsive-menu{
+    display: block;
+  }
+  /*.full-menu.visible {
+    display: none !important;
+  }*/
 }

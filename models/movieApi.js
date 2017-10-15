@@ -21,22 +21,22 @@ movieApi.get("/", (req, res) => {
         })
 
     .catch(function (err) {
-      res.json({Error:err});
+      res.json(err);
       console.log(err);
        });
        })
     .catch(function (err) {
-     res.json({Error:err});
+     res.json({err});
      console.log(err);
         });
         })
     .catch(function (err) {
-     res.json({Error:err});
-      onsole.log(err);
+     res.json({err});
+      console.log(err);
         });
         })
     .catch(function (err) {
-      res.json({Error:err});
+      res.json({err});
       console.log(err);
     });
 });
@@ -56,7 +56,8 @@ movieApi.post('/new', function (req, res, next) {
      else{
      user.movies.push(
        { dateAdded:moment().format('MMMM Do YYYY'),
-         movieId:req.body.movieId
+         movieId:req.body.movieId,
+         comment:req.body.comment
       });
      user.save(function (err) {
        console.log('movie added');
@@ -114,5 +115,20 @@ user.save(function (err) {
  res.json(user.movies); 
 });
 });
+
+// movieApi.update('/add-comment', (req, res, next) => {
+//   User.findById(req.user._id, function (err, user) {
+//     var movieId = parseInt(req.body.movieId);
+//     user.movies.forEach(function (movie, index) {
+//       if (movieId === movie.movieId) {
+//         user.movies.comment = req.body.comment;
+//       }
+//     });
+//     user.save(function (err) {
+//       console.log('movie updated');
+//     });
+//     res.json(user.movies);
+//   });
+// });
 
 module.exports = movieApi;

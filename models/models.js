@@ -26,7 +26,7 @@ const Movies = {
                 });
                 resolve(movieId);
               } else {
-                reject("No movies found!!");
+                reject(response.statusCode);
               }
             });
           });
@@ -137,7 +137,7 @@ const Movies = {
               }
               resolve(result);
             } else {
-              reject("Cannot get Response data!");
+              reject({msg:"Cannot get Response data!"});
             }
           });
         }

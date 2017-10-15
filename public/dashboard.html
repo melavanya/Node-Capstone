@@ -5,6 +5,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Movie Diary</title>
+<link rel="shortcut icon" href="https://cdn.sstatic.net/Sites/stackoverflow/img/favicon.ico?v=4f32ecc8f43d">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.6.5/sweetalert2.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.10/semantic.css">
   <link href='https://fonts.googleapis.com/css?family=ABeeZee' rel='stylesheet'>
@@ -13,16 +14,25 @@
 
 <body>
 
-  <div class="ui rail">
-    <div class="ui sticky fixed-nav">
+  <div class="ui rail responsive-menu">
+    <div class="ui sticky fixed-nav ">
       <div class="ui black big launch right attached fixed button">
         <i class="content icon"></i>
       </div>
     </div>
   </div>
 
+<!--<div class="ui stackable container full-menu menu">
+    <div class="item">
+      <img src="assets/images/logo.png">
+    </div>
+    <a class="item">Features</a>
+    <a class="item">Testimonials</a>
+    <a class="item">Sign-in</a>
+  </div>-->
+
   <div id="context">
-    <div class="ui left vertical inverted sidebar labeled icon menu stackable">
+    <div class="ui left vertical inverted sidebar visible labeled icon menu full-menu stackable">
       <a href="/users/dashboard" class="item"><i class="home icon"></i>Home</a>
       <a href="/movies/favorites" class="item"><i class="heart icon"></i>Favorites<div class="floating ui red label fav-movies"></div></a>
       <a href="/" class="item log-out"><i class="power icon"></i>Log-out</a></div>
@@ -33,6 +43,7 @@
   
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.10/semantic.js"></script>
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.6.5/sweetalert2.min.js"></script>
   <script type="text/javascript" src="/js/fav-movies.js"></script>
 
