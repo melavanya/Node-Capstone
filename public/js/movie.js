@@ -112,9 +112,6 @@ function displaySearchData(dataJson) {
   $('.modal-show').click(function () {
 
     var movieId = $(this).val();
-
-
-
     $('.coupled.modal')
       .modal({
         allowMultiple: false
