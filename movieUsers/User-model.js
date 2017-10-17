@@ -12,16 +12,18 @@ const UserSchema = mongoose.Schema({
     type: String,
     required: true
   },
-  firstName: {type: String, default: ""},
-  lastName: {type: String, default: ""},
+  firstName: { type: String, default: "" },
+  lastName: { type: String, default: "" },
   movies: [{
     dateAdded: String,
-    movieId : Number,
-    comment: String
+    movieId: Number,
+    comment: String,
+    poster: String,
+    title: String
   }]
 });
 
-UserSchema.methods.apiRepr = function() {
+UserSchema.methods.apiRepr = function () {
   return {
     username: this.username || '',
     firstName: this.firstName || '',
@@ -29,13 +31,13 @@ UserSchema.methods.apiRepr = function() {
   };
 }
 
-UserSchema.methods.validatePassword = function(password) {
+UserSchema.methods.validatePassword = function (password) {
   return bcrypt.compare(password, this.password);
 }
 
-UserSchema.statics.hashPassword = function(password) {
+UserSchema.statics.hashPassword = function (password) {
   return bcrypt.hash(password, 10);
 }
 const User = mongoose.model('User', UserSchema);
 
-module.exports = {User};
+module.exports = { User };

@@ -4,7 +4,6 @@ $(function () {
 
   var viewportWidth = $(window).width();
   if (viewportWidth <= 500) {
-    console.log('width is changing');
     $('.full-menu').css('display', 'none');
   }
 
@@ -20,12 +19,13 @@ $(function () {
     var searchTerm = $(this).find(".js-search-input").val();
     $('.js-submit-search').addClass('loading');
     $('.js-search-input').parent().addClass('disabled');
-    setTimeout(function () {
-      $('.js-submit-search').removeClass('loading');
-      $('.js-search-input').parent().removeClass('disabled');
-    }, 5000);
-    getMovies(searchTerm);
-    //setTiemout
+    getMovies(searchTerm).then(function (data) {
+      //Set TimeOut as only fewer requests are allowed by TMDB API
+      setTimeout(function () {
+        $('.js-submit-search').removeClass('loading');
+        $('.js-search-input').parent().removeClass('disabled');
+      }, 10000)
+    });
   });
 
   //Favorites button Display
@@ -46,13 +46,12 @@ $(function () {
 
 //Get Movies Api Call
 function getMovies(searchTerm) {
-  $.ajax({
+  return $.ajax({
     url: '/movies',
     dataType: 'json',
     data: { query: searchTerm }
   })
     .done(function (data) {
-      console.log(data);
       if (data.length !== undefined) {
         displaySearchData(data);
       }
@@ -74,7 +73,6 @@ function getMovies(searchTerm) {
 
 //Display Movies
 function displaySearchData(dataJson) {
-  console.log(dataJson)
   $('.js-search-results').html('');
   var html = '';
   html += '<div class="ui styled fluid accordion movie-results">';
@@ -110,27 +108,33 @@ function displaySearchData(dataJson) {
   $('.js-search-results').html(html);
   $('.ui.accordion').accordion();
   $('.modal-show').click(function () {
-
     var movieId = $(this).val();
+    var dataToBeSent = {};
+    dataJson.forEach(function (movie) {
+      if (movie.MovieId == movieId) {
+        dataToBeSent = Object.assign({}, {
+          'movieId': movieId,
+          'poster': movie.Poster,
+          'title': movie.Title
+        });
+      }
+    });
+
     $('.coupled.modal')
       .modal({
         allowMultiple: false
       });
-
-    $('#2' + $(this).val()).modal('attach events', '#' + $(this).val());
+    $('#2' + $(this).val()).modal('attach events', '.ui.positive.button.check-fav');
     $('#' + $(this).val()).modal('show');
-
-
 
     $('#2' + $(this).val()).modal({
       onApprove: function () {
-        var comment = $('#comment' + movieId).val();
+        dataToBeSent.comment = $('#comment' + movieId).val();
         $.ajax({
           url: '/movies/new',
           type: 'POST',
           data: {
-            movieId: movieId,
-            comment: comment
+            dataToBeSent
           }
         })
           .done(function (data) {
@@ -139,11 +143,13 @@ function displaySearchData(dataJson) {
                 'Movie was already added to Favorites on ' + data.dateAdded + '!'
               )
             }
-            favoriteMovies = data;
-            $('.fav-movies').html(data.length);
-            swal(
-              'Movie added to Favorites!'
-            )
+            else {
+              favoriteMovies = data;
+              $('.fav-movies').html(data.length);
+              swal(
+                'Movie added to Favorites!'
+              )
+            }
           })
           .fail(function (error) {
             console.log('Error Occured.', error);
