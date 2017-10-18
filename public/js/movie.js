@@ -24,7 +24,7 @@ $(function () {
       setTimeout(function () {
         $('.js-submit-search').removeClass('loading');
         $('.js-search-input').parent().removeClass('disabled');
-      }, 10000)
+      }, 1000)
     });
   });
 
@@ -52,6 +52,7 @@ function getMovies(searchTerm) {
     data: { query: searchTerm }
   })
     .done(function (data) {
+      console.log(data.length)
       if (data.length !== undefined) {
         displaySearchData(data);
       }
@@ -73,12 +74,14 @@ function getMovies(searchTerm) {
 
 //Display Movies
 function displaySearchData(dataJson) {
+  $('.js-search-results').hide();  
   $('.js-search-results').html('');
   var html = '';
   html += '<div class="ui styled fluid accordion movie-results">';
   dataJson.forEach(function (movie) {
     var genreElement = " ";
     var castElement = " ";
+    var imgSrc = "";
     movie.Genre.forEach(function (genre) {
       genreElement += '<div class="ui tag red label">' + genre.name + '</div>';
     });
@@ -87,10 +90,15 @@ function displaySearchData(dataJson) {
         castElement += '<div class="item"><div class="header">' + cast.castName + '</div> As ' + cast.characterName + '</div>';
       });
     }
+    if(movie.Poster === null){
+      imgSrc="/images/not-found.png";
+    }else{
+      imgSrc="https://image.tmdb.org/t/p/w500" + movie.Poster;
+    }
     html += '<div><div class="title"><i class="dropdown icon"></i>' + movie.Title +
       '</div><div class=" ui content"><p>' + movie.Overview + '</p><button class="ui green button modal-show" value="' + movie.MovieId + '">Details</button></div>' +
       '<div class="ui modal coupled ' + movie.MovieId + '" id=' + movie.MovieId + '><i class="close icon"></i><div class="header">' + movie.Title +
-      '</div><div class="image content"><div class="ui image"><img class="poster-img" src="https://image.tmdb.org/t/p/w500' + movie.Poster + '">' +
+      '</div><div class="image content"><div class="ui image"><img alt="images/not-found.png" class="poster-img" src="'+ imgSrc + '">' +
       '</div><div class="description"><div class="ui header">' + movie.Overview +
       '</div><div class="ui horizontal list"><div class="item"><div class="header">Released On:' + movie.Release_Date + '</div></div>' +
       '<div class="item"><div class="header">Run-time:' + movie.Duration + ' Minutes</div>' +
@@ -129,7 +137,13 @@ function displaySearchData(dataJson) {
 
     $('#2' + $(this).val()).modal({
       onApprove: function () {
-        dataToBeSent.comment = $('#comment' + movieId).val();
+        if($('#comment' + movieId).val() == "" || $('#comment' + movieId).val()== null){
+        dataToBeSent.comment = "No Comments were added."
+        }
+        else {
+          dataToBeSent.comment = $('#comment' + movieId).val();
+        }
+        console.log(dataToBeSent)
         $.ajax({
           url: '/movies/new',
           type: 'POST',
@@ -158,6 +172,8 @@ function displaySearchData(dataJson) {
       }
     });
   });
+  setTimeout(function () {
+    $('.js-search-results').show();
+}, 1000);
 
-  $('.js-search-results').show();
 }

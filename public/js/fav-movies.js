@@ -37,17 +37,22 @@ function getFavMovies() {
 function displaySearchData(dataJson) {
     $('.js-search-results').html('');
     var html = "";
+    var comment="";
+    var imgSrc = "";
     html += '<div class="ui small images">';
     dataJson.forEach(function (movie) {
         console.log(movie)
-        if(movie.comment == undefined || "" || null){
-            movie.comment = "No Comments";
-        }
+        if(movie.poster == ""){
+            imgSrc="/images/not-found.png";
+          }else{
+            imgSrc="https://image.tmdb.org/t/p/w500" + movie.poster;
+          }
         html += '<div class="ui small spaced image"><div class="ui black ribbon label"><i class="plus icon"></i>' + movie.dateAdded + '</div>' +
-        '<a class="modal-show" id="' + movie.movieId + '"><img src="https://image.tmdb.org/t/p/w500' + movie.poster + '"></a></div>' +
+        '<a class="modal-show" id="' + movie.movieId + '"><img src="'+ imgSrc + '"></a></div>' +
         '<div class="ui small modal ' + movie.movieId + '"><i class="close icon"></i><div class="header">' + movie.title +
-        '</div><div class="image content"><div class="ui medium image"><img src="https://image.tmdb.org/t/p/w500' + movie.poster + '">' +
-        '</div><div class="description"><div class="ui header"><h4>Your Comment</h4><p>'+ movie.comment +'</p>'+
+        '</div><div class="image content"><div class="ui medium image"><img  src="' + imgSrc + '">' +
+        '</div><div class="description"><div class="ui header"><h4>Your Comments</h4><div class="ui form"><div class="field">'+
+        '<textarea class="js-comment" readonly="" placeholder="'+ movie.comment+'"></textarea></div></div>'+
         '</div></div></div><div class="actions"><div class="ui negative labeled icon button">Delete from favorites!<i class="remove icon"></i>' +
         '</div></div></div>';
 

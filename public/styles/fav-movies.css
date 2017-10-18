@@ -6,7 +6,6 @@ body{
   background-image: url("../images/image.jpg") !important;
   background-repeat: no-repeat;
   background-size:cover; 
-  background-position: center;
   height:auto;
   /*-webkit-filter: blur(5px);
   -moz-filter: blur(5px);
@@ -30,13 +29,13 @@ body.pushable > .pusher {
 .ui.segment.container {
   margin-top: 50px;
 }
+
 h1, h2, h3, h4, h5 {
   font-family: 'ABeeZee';
   font-size: 17px;
 }
 .ui.container.segment.js-search-results{
   display: none;
-  height:500px;
   overflow: scroll;
 }
 .ui.floating.label {
@@ -57,6 +56,11 @@ a{
 }
 .responsive-menu{
   display: none;
+}
+.js-comment{
+border:ridge;
+width:50px;
+height:100px;
 }
 @media only screen and (min-width: 1017px) {
     body {

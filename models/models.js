@@ -22,7 +22,8 @@ const Movies = {
     return new Promise(function (resolve, reject) {
       client.get(TMDB_URL1, queryString, function (data, response) {
         if (response.statusCode === 200) {
-          data.results.forEach(function (item) {
+          var data = data.results.slice(0,5);
+          data.forEach(function (item) {
             movieId.push(item.id);
           });
           resolve(movieId);
