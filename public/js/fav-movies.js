@@ -28,7 +28,12 @@ function getFavMovies() {
     $.getJSON('/users/favorites', function (data) {
         favoriteMovies = data;
         $('.fav-movies').html(data.length);
+        if(data.length === 0){
+         $('.js-search-results').hide();
+        }
+        else{
         displaySearchData(data);
+        }
     });
 }
 
