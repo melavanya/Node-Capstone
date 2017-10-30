@@ -143,7 +143,6 @@ function displaySearchData(dataJson) {
         else {
           dataToBeSent.comment = $('#comment' + movieId).val();
         }
-        console.log(dataToBeSent)
         $.ajax({
           url: '/movies/new',
           type: 'POST',
