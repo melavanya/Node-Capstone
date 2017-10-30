@@ -7,7 +7,7 @@ const LocalStrategy = require('passport-local').Strategy;
 
 const flash = require('connect-flash');
 const session = require('express-session');
-const { router: Router } = require('./movieUsers/router');
+const {router: Router } = require('./movieUsers/router');
 const movieApi = require('./models/movieApi');
 
 mongoose.Promise = global.Promise;

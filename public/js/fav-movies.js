@@ -46,7 +46,6 @@ function displaySearchData(dataJson) {
     var imgSrc = "";
     html += '<div class="ui small images">';
     dataJson.forEach(function (movie) {
-        console.log(movie)
         if(movie.poster == ""){
             imgSrc="/images/not-found.png";
           }else{
@@ -57,8 +56,8 @@ function displaySearchData(dataJson) {
         '<div class="ui small modal ' + movie.movieId + '"><i class="close icon"></i><div class="header">' + movie.title +
         '</div><div class="image content"><div class="ui medium image"><img  src="' + imgSrc + '">' +
         '</div><div class="description"><div class="ui header"><h4>Your Comments</h4><div class="ui form"><div class="field">'+
-        '<textarea class="js-comment" readonly="" placeholder="'+ movie.comment+'"></textarea></div></div>'+
-        '</div></div></div><div class="actions"><div class="ui negative labeled icon button">Delete from favorites!<i class="remove icon"></i>' +
+        '<textarea class="js-comment" id="comment" placeholder="'+ movie.comment+'"></textarea></div></div>'+
+        '</div></div></div><div class="actions"><div class="ui positive button">Update</div><div class="ui negative labeled icon button">Delete from favorites!<i class="remove icon"></i>' +
         '</div></div></div>';
 
     });
@@ -69,6 +68,23 @@ function displaySearchData(dataJson) {
         var modalClass = '.ui.modal.' + $(this).attr('id');
         var movieId = $(this).attr('id');
         $(modalClass).modal({
+            onApprove: function (){
+                var comment = $('#comment').val();
+                if(comment !== ""){
+                $.ajax({
+                    url: '/movies/comment',
+                    data: { movieId: movieId, comment: comment },
+                    type: 'PUT'
+                })
+                    .done(function (data) {
+                        console.log(data.comment);
+                        $("#comment").attr("placeholder",data.comment).val("");
+                    })
+                    .fail(function (error) {
+                        console.log('Error Occured.',error);
+                    });
+                }
+            },
             onDeny: function () {
                 swal({
                     title: 'Are you sure?',

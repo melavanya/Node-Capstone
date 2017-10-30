@@ -84,19 +84,17 @@ movieApi.delete('/delete', (req, res, next) => {
   });
 });
 
-// movieApi.update('/add-comment', (req, res, next) => {
-//   User.findById(req.user._id, function (err, user) {
-//     var movieId = parseInt(req.body.movieId);
-//     user.movies.forEach(function (movie, index) {
-//       if (movieId === movie.movieId) {
-//         user.movies.comment = req.body.comment;
-//       }
-//     });
-//     user.save(function (err) {
-//       console.log('movie updated');
-//     });
-//     res.json(user.movies);
-//   });
-// });
+movieApi.put('/comment', (req, res, next) => {
+  User.findById(req.user._id, function (err, user) {
+    var movieId = parseInt(req.body.movieId);
+    user.movies.forEach(function (movie, index) {
+      if (movieId === movie.movieId) {
+        movie.comment = req.body.comment;
+      }
+      res.json(movie);
+    });
+    
+  });
+});
 
 module.exports = movieApi;
