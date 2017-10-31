@@ -84,16 +84,21 @@ movieApi.delete('/delete', (req, res, next) => {
   });
 });
 
-movieApi.post('/comment', (req, res, next) => {
+movieApi.put('/comment', (req, res, next) => {
   User.findById(req.user._id, function (err, user) {
     var movieId = parseInt(req.body.movieId);
+    var resMovie = {};
     user.movies.forEach(function (movie, index) {
       if (movieId === movie.movieId) {
         movie.comment = req.body.comment;
       }
-      res.json(movie);
+      resMovie = movie;
+      console.log(resMovie);
     });
-    
+    user.save(function (err) {
+      console.log('movie updated');
+    });
+    res.json(resMovie);
   });
 });
 

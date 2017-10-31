@@ -70,10 +70,11 @@ function displaySearchData(dataJson) {
         $(modalClass).modal({
             onApprove: function (){
                 var comment = $('#comment').val();
+                console.log(comment);
                 if(comment !== ""){
                 $.ajax({
                     url: '/movies/comment',
-                    type: 'POST',
+                    type: 'PUT',
                     data: { movieId: movieId, comment: comment }
                     
                 })
