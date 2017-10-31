@@ -84,7 +84,7 @@ movieApi.delete('/delete', (req, res, next) => {
   });
 });
 
-movieApi.put('/comment', (req, res, next) => {
+movieApi.post('/comment', (req, res, next) => {
   User.findById(req.user._id, function (err, user) {
     var movieId = parseInt(req.body.movieId);
     user.movies.forEach(function (movie, index) {

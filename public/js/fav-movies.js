@@ -73,7 +73,7 @@ function displaySearchData(dataJson) {
                 if(comment !== ""){
                 $.ajax({
                     url: '/movies/comment',
-                    type: 'PUT',
+                    type: 'POST',
                     data: { movieId: movieId, comment: comment }
                     
                 })
