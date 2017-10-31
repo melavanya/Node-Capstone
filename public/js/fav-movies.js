@@ -56,7 +56,7 @@ function displaySearchData(dataJson) {
         '<div class="ui small modal ' + movie.movieId + '"><i class="close icon"></i><div class="header">' + movie.title +
         '</div><div class="image content"><div class="ui medium image"><img  src="' + imgSrc + '">' +
         '</div><div class="description"><div class="ui header"><h4>Your Comments</h4><div class="ui form"><div class="field">'+
-        '<textarea class="js-comment" id="comment" placeholder="'+ movie.comment+'"></textarea></div></div>'+
+        '<textarea class="js-comment" id="comment' + movie.movieId + '" placeholder="'+ movie.comment+'"></textarea></div></div>'+
         '</div></div></div><div class="actions"><div class="ui positive button">Update</div><div class="ui negative labeled icon button">Delete from favorites!<i class="remove icon"></i>' +
         '</div></div></div>';
 
@@ -69,18 +69,17 @@ function displaySearchData(dataJson) {
         var movieId = $(this).attr('id');
         $(modalClass).modal({
             onApprove: function (){
-                var comment = $('#comment').val();
-                console.log(comment);
-                if(comment !== ""){
+                var cmnt = $('#comment'+ movieId).val();
+                console.log(cmnt);
+                if(cmnt !== ""){
                 $.ajax({
                     url: '/movies/comment',
                     type: 'PUT',
-                    data: { movieId: movieId, comment: comment }
+                    data: { movieId: movieId, comment: cmnt }
                     
                 })
                     .done(function (data) {
-                        console.log(data.comment);
-                        $("#comment").attr("placeholder",data.comment).val("");
+                        $('#comment'+ movieId).attr("placeholder",data.comment).val("");
                     })
                     .fail(function (error) {
                         console.log('Error Occured.',error);

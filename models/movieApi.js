@@ -91,8 +91,8 @@ movieApi.put('/comment', (req, res, next) => {
     user.movies.forEach(function (movie, index) {
       if (movieId === movie.movieId) {
         movie.comment = req.body.comment;
+        resMovie = movie;
       }
-      resMovie = movie;
       console.log(resMovie);
     });
     user.save(function (err) {
