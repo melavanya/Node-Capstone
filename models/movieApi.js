@@ -9,31 +9,14 @@ const path = require('path');
 
 
 movieApi.get("/", (req, res) => {
-  Movies.getMovieId(req.query.query)
-    .then(function (Ids) {
-      Movies.getDataFromApi(Ids)
-        .then(function (result) {
-          Movies.getCastDetails(result)
-            .then(function () {
-              Movies.getResponseData()
-                .then(function (result) {
-                  res.json(result);
-                })
-                .catch(function (err) {
-                  res.json(err);
-                });
-            })
-            .catch(function (err) {
-              res.json({ err });
-            });
-        })
+    Movies.getMovieId(req.query.query)
+        .then(Ids => Movies.getDataFromApi(Ids))
+        .then(result =>  Movies.getCastDetails(result))
+        .then(() => Movies.getResponseData())
+        .then(result => res.json(result))
         .catch(function (err) {
-          res.json({ err });
+            res.json({ err });
         });
-    })
-    .catch(function (err) {
-      res.json({ err });
-    });
 });
 
 movieApi.post('/new', function (req, res, next) {
