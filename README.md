@@ -1,8 +1,6 @@
  # Movie Diary
  
- ### Live https://movie-diary.herokuapp.com
-
-(public/images/movie-diary.png)
+![dock](public/images/movie-diary.png)
 
 ### About the App
 
@@ -26,4 +24,4 @@ Using TMDB API, lookup a movie, get details and store as a "memory" card in the 
 ### API 
 - TMDB API
 ### Back-end
-- Node.js, Express.js, Passport.js, REST APIs, Mocha, Chai, MongoDB, Mongoose
+- Node.js, Express.js, Passport.js, REST APIs, Mocha, Chai, MongoDB, Mongoose!
